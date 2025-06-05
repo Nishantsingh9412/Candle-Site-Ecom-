@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import subCategory from "../models/subCategory.js";
-  
+
 export const createSubCategory = async (req, res) => {
   const { subCategoryName, category } = req.body;
   if (!mongoose.Types.ObjectId.isValid(category)) {
@@ -34,6 +34,14 @@ export const createSubCategory = async (req, res) => {
       subCategoryName,
       category,
     });
+
+    await newSubCategory.populate("category");
+    if (!newSubCategory) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to create sub-category",
+      });
+    }
     return res.status(201).json({
       success: true,
       message: "Sub-category created successfully",
@@ -59,7 +67,9 @@ export const getSubCategoryById = async (req, res) => {
   }
 
   try {
-    const subCategoryData = await subCategory.findById(_id);
+    const subCategoryData = await subCategory
+      .findById(_id)
+      .populate("category");
     if (!subCategoryData) {
       return res.status(404).json({
         success: false,
@@ -82,7 +92,10 @@ export const getSubCategoryById = async (req, res) => {
 
 export const getAllSubCategories = async (req, res) => {
   try {
-    const subCategories = await subCategory.find({});
+    const subCategories = await subCategory
+      .find({})
+      .populate("category");
+
     return res.status(200).json({
       success: true,
       message: "Sub-categories fetched successfully",
@@ -115,13 +128,14 @@ export const updateSubCategory = async (req, res) => {
       { new: true }
     );
 
+    await updatedSubCategory.populate("category");
+
     if (!updatedSubCategory) {
       return res.status(404).json({
         success: false,
         message: "Sub-category not found",
       });
     }
-
     return res.status(200).json({
       success: true,
       message: "Sub-category updated successfully",
@@ -157,7 +171,7 @@ export const deleteSubCategory = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Sub-category deleted successfully",
-      result: deletedSubCategory, 
+      result: deletedSubCategory,
     });
   } catch (err) {
     return res.status(500).json({

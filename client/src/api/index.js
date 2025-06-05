@@ -31,3 +31,16 @@ export const GetCategoryByIdAPI = (id) => API.get(`/api/v1/category/get-single-c
 export const UpdateCategoryByIdAPI = (id, updatedCategory) => API.patch(`/api/v1/category/update-category/${id}`, updatedCategory)
 // Delete Category 
 export const DeleteCategoryByIdAPI = (id) => API.delete(`/api/v1/category/delete-category/${id}`)
+
+
+// Sub-Category API's
+// Create new sub-category
+export const CreateSubCategoryAPI = (newSubCategory) => API.post('/api/v1/sub-category/create', newSubCategory)
+// Get all sub-categories
+export const GetAllSubCategoriesAPI = () => API.get('/api/v1/sub-category/get-all-sub-categories')
+// Get Sub-Category by Id
+export const GetSubCategoryByIdAPI = (id) => API.get(`/api/v1/sub-category/get-single-sub-category/${id}`)
+// Update Sub-Category by Id
+export const UpdateSubCategoryByIdAPI = (id, updatedSubCategory) => API.patch(`/api/v1/sub-category/update-sub-category/${id}`, updatedSubCategory)
+// Delete Sub-Category by Id
+export const DeleteSubCategoryByIdAPI = (id) => API.delete(`/api/v1/sub-category/delete-sub-category/${id}`)
