@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram } from 'react-icons/fa';
+import { Facebook, Instagram } from 'lucide-react';
 
 const Footer = () => {
     const [email, setEmail] = useState('');
@@ -41,8 +41,8 @@ const Footer = () => {
     ];
     
     const socialLinks = [
-        { icon: <FaFacebookF />, url: "https://facebook.com" },
-        { icon: <FaInstagram />, url: "https://instagram.com" }
+        { icon: <Facebook />, url: "https://facebook.com" },
+        { icon: <Instagram />, url: "https://instagram.com" }
     ];
     
     const handleSubmit = (e) => {

@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
-import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+
+import {
+  Home, 
+  User, 
+  Settings,
+  LogOut,
+  ShoppingBasket 
+} from "lucide-react";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -29,25 +36,25 @@ const Dashboard = () => {
         <ul className="flex-1 space-y-4 p-4">
           <Link to="/admin/home">
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
-              <FaHome />
+              <Home />
               <span>Home</span>
             </li>
           </Link>
           <Link to="/admin/category">
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
-              <FaUser />
+              <User />
               <span>Category</span>
             </li>
           </Link>
           <Link to="/admin/sub-category">
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
-              <FaCog />
+              <Settings />
               <span>Sub Category</span>
             </li>
           </Link>
           <Link to="/admin/products">
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
-              <FaCog />
+              <ShoppingBasket />
               <span>Products</span>
             </li>
           </Link>
@@ -55,7 +62,7 @@ const Dashboard = () => {
             onClick={handleLogout}
             className="flex items-center space-x-3 hover:bg-red-600 p-2 rounded cursor-pointer"
           >
-            <FaSignOutAlt />
+            <LogOut />
             <span>Logout</span>
           </li>
         </ul>

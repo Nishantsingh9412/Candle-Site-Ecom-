@@ -1,19 +1,50 @@
-import React, { useState } from 'react';
-import { Search, User, ShoppingBag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Search, User, ShoppingBag } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllCategoriesAction } from "../../redux/action/category";
+import { GetAllSubCategoriesAction } from "../../redux/action/subCategory";
 
 const Header = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+
+  const categories = useSelector((state) => state.category);
+  console.log(categories);
+  // Dynamic navigation items based on categories
+
+  const subCategories = useSelector((state) => state.subCategory);
+  console.log(subCategories);
+
+  const DynamicNavItems = categories?.categories?.map((category) => ({
+    name: category.CategoryName.toUpperCase(),
+    path: category.CategoryName,
+    // path: category.CategoryName === "All" ? "/all" : `/category/${category._id}`,
+  }))
+  // .concat(subCategories?.subCategories?.map((subCategory) => ({
+  //   name: subCategory.SubCategoryName,
+  //   path: `/subcategory/${subCategory._id}`,
+  // }))
+// );
+
+
+  useEffect(() => {
+    dispatch(GetAllCategoriesAction());
+    dispatch(GetAllSubCategoriesAction());
+  }, []);
 
   const navItems = [
-    { name: 'ABOUT US', path: '/about-us' },
-    { name: 'SHOP', path: '/shop' }, 
-    { name: 'COLLECTIONS', path: '/collections' },
-    { name: 'SALE', path: '/sale' },
-    { name: 'BESPOKE', path: '/bespoke' },
-    { name: 'STOCKISTS', path: '/stockists' },
-    { name: 'CONTACT US', path: '/contact-us' }
+    { name: "ABOUT US", path: "/about-us" },
+    ...DynamicNavItems,
+    // { name: 'SHOP', path: '/shop' },
+    // { name: 'COLLECTIONS', path: '/collections' },
+    { name: "SALE", path: "/sale" },
+    { name: "BESPOKE", path: "/bespoke" },
+    // { name: "STOCKISTS", path: "/stockists" },
+    { name: "CONTACT US", path: "/contact-us" },
   ];
 
   return (
@@ -30,7 +61,10 @@ const Header = () => {
                 className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
                 autoFocus
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+              <Search
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={16}
+              />
               <button
                 onClick={() => setIsSearchOpen(false)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
@@ -53,7 +87,7 @@ const Header = () => {
               {/* Right Side Icons */}
               <div className="flex items-center space-x-4">
                 {/* Search Icon */}
-                <button 
+                <button
                   className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
                   onClick={() => setIsSearchOpen(true)}
                 >

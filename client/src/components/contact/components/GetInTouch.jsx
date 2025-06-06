@@ -1,13 +1,13 @@
 import { useState } from "react";
 import {
-  FaWhatsapp,
-  FaInstagram,
-  FaFacebook,
-  FaMapMarkerAlt,
-  FaEnvelope,
-  FaClock,
-  FaPaperPlane,
-} from "react-icons/fa";
+  MessageSquare,
+  Instagram,
+  Facebook,
+  MapPin,
+  Mail,
+  Clock,
+  Send,
+} from "lucide-react";
 
 const GetInTouch = () => {
   const [formData, setFormData] = useState({
@@ -52,7 +52,7 @@ const GetInTouch = () => {
           <div className="flex-1 min-w-[300px]">
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
               <h3 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
-                <FaPaperPlane className="mr-3 text-blue-500" />
+                <Send className="mr-3 text-blue-500" size={24} />
                 Send us a message
               </h3>
 
@@ -136,7 +136,7 @@ const GetInTouch = () => {
                   type="submit"
                   className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-blue-700 hover:to-cyan-700 hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center"
                 >
-                  <FaPaperPlane className="mr-2" />
+                  <Send className="mr-2" size={20} />
                   Send Message
                 </button>
               </form>
@@ -153,7 +153,7 @@ const GetInTouch = () => {
               <div className="space-y-8">
                 <div className="flex items-start space-x-4">
                   <div className="bg-blue-500 p-3 rounded-full">
-                    <FaMapMarkerAlt size={20} />
+                    <MapPin size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">
@@ -168,7 +168,7 @@ const GetInTouch = () => {
                       <strong>Phone:</strong> +91-9910049953
                     </p>
                     <div className="flex items-center mt-2 text-gray-300">
-                      <FaClock className="mr-2" size={14} />
+                      <Clock className="mr-2" size={14} />
                       Monday to Friday, 10 AM to 6 PM
                     </div>
 
@@ -180,7 +180,7 @@ const GetInTouch = () => {
 
                 <div className="flex items-start space-x-4">
                   <div className="bg-green-500 p-3 rounded-full">
-                    <FaEnvelope size={20} />
+                    <Mail size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">Email Us</h4>
@@ -192,7 +192,7 @@ const GetInTouch = () => {
 
                 <div className="flex items-start space-x-4">
                   <div className="bg-green-500 p-3 rounded-full">
-                    <FaWhatsapp size={20} />
+                    <MessageSquare size={20} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">WhatsApp</h4>
@@ -210,21 +210,21 @@ const GetInTouch = () => {
                       aria-label="WhatsApp"
                       className="bg-green-500 p-3 rounded-full transition-all duration-300 hover:bg-green-600 hover:scale-110"
                     >
-                      <FaWhatsapp size={20} />
+                      <MessageSquare size={20} />
                     </a>
                     <a
                       href="#"
                       aria-label="Instagram"
                       className="bg-pink-500 p-3 rounded-full transition-all duration-300 hover:bg-pink-600 hover:scale-110"
                     >
-                      <FaInstagram size={20} />
+                      <Instagram size={20} />
                     </a>
                     <a
                       href="#"
                       aria-label="Facebook"
                       className="bg-blue-600 p-3 rounded-full transition-all duration-300 hover:bg-blue-700 hover:scale-110"
                     >
-                      <FaFacebook size={20} />
+                      <Facebook size={20} />
                     </a>
                   </div>
                 </div>

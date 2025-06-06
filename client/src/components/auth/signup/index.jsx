@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 // import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from 'react-redux';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeOff } from "lucide-react";
 
 import signUpImage from '../../../assets/img/signup-image.gif';
 
@@ -271,7 +271,7 @@ const SignUp = () => {
                                 className="absolute inset-y-0 mt-5 right-0 pr-3 flex items-center cursor-pointer"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? <FaEyeSlash size={'20'} /> : <FaEye size={'20'} />}
+                                {showPassword ? <EyeOff  size={'20'} /> : <Eye size={'20'} />}
                             </div>
                         </div>
                         <div className="relative">
@@ -286,7 +286,7 @@ const SignUp = () => {
                                 className="absolute inset-y-0 mt-5 right-0 pr-3 flex items-center cursor-pointer"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             >
-                                {showConfirmPassword ? <FaEyeSlash size={'20'} /> : <FaEye size={'20'} />}
+                                {showConfirmPassword ? <EyeOff  size={'20'} /> : <Eye size={'20'} />}
                             </div>
                         </div>
                         <button

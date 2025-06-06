@@ -116,9 +116,10 @@ const SubCategoryAdmin = () => {
           </h1>
           <button
             onClick={() => setShowModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center"
+            className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg flex items-center cursor-pointer shadow-md transition duration-200"
           >
-            <Plus className="mr-2" /> Add Sub-Category
+            <Plus className="mr-2" />
+             Add Sub-Category
           </button>
         </div>
         <div className="bg-white rounded-lg shadow-md">
@@ -249,7 +250,7 @@ const SubCategoryAdmin = () => {
                 <div className="mt-auto">
                   <button
                     type="submit"
-                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center"
+                    className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center cursor-pointer"
                   >
                     <Plus className="mr-2" />
                     Add Sub-Category

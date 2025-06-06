@@ -9,6 +9,8 @@ import authRoutes from "./routes/auth.js";
 import otpRoutes from "./routes/otpRoutes.js";
 import CategoryRoutes from "./routes/categoryRoutes.js";
 import subCategoryRoutes from "./routes/subCategoryRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js"
 // import ProductRoutes from "./routes/productRoutes.js";
 // import progressRoute from "./routes/progress.js";
 
@@ -30,6 +32,8 @@ app.use('/api/v1/otp', otpRoutes)
 // -------------------------- shopping cart and wishlist routes ---------------------------
 app.use('/api/v1/category',CategoryRoutes);
 app.use('/api/v1/sub-category', subCategoryRoutes);
+app.use('/api/v1/review', reviewRoutes)
+app.use('/api/v1/products',productRoutes)
 // app.use('/api/v1/wishlist', WishlistRoutes); 
 // app.use('/api/v1/product', ProductRoutes);  
 
