@@ -11,6 +11,7 @@ import Contact from "./components/contact/index";
 import AboutUs from "./components/AboutUs";
 import Shop from "./components/shop/index";
 import Collections from "./components/collections";
+import SingleProduct from "./components/singleProduct";
 
 
 // Admin Components Start
@@ -36,6 +37,8 @@ const AllRoutes = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/collections" element={<Collections />} />
+        <Route path="/product/:slug" element={<SingleProduct />} />
+
       </Route>
 
       {/* Admin Routes */}

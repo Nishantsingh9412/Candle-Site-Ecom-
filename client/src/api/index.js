@@ -44,3 +44,18 @@ export const GetSubCategoryByIdAPI = (id) => API.get(`/api/v1/sub-category/get-s
 export const UpdateSubCategoryByIdAPI = (id, updatedSubCategory) => API.patch(`/api/v1/sub-category/update-sub-category/${id}`, updatedSubCategory)
 // Delete Sub-Category by Id
 export const DeleteSubCategoryByIdAPI = (id) => API.delete(`/api/v1/sub-category/delete-sub-category/${id}`)
+
+
+// Product APIs
+// Create new product
+export const CreateProductAPI = (newProduct) => API.post('/api/v1/products/create', newProduct);
+// Get all products
+export const GetAllProductsAPI = () => API.get('/api/v1/products/get-all-products');
+// Get Product by Id
+export const GetProductByIdAPI = (id) => API.get(`/api/v1/products/get-product-single/${id}`);
+// Get Product by Slug
+export const GetProductBySlugAPI = (slug) => API.get(`/api/v1/products/get-product-by-slug/${slug}`);
+// Update Product by Id
+export const UpdateProductByIdAPI = (id, updatedProduct) => API.patch(`/api/v1/products/update-product/${id}`, updatedProduct);
+// Delete Product by Id
+export const DeleteProductByIdAPI = (id) => API.delete(`/api/v1/products/delete-product/${id}`);

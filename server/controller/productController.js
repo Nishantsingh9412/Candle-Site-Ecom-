@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-import generateUniqueSKU from "../utils/sku.js";
 import Product from "../models/Products.js";
+import generateSlug from "../utils/slug.js";
+import generateUniqueSKU from "../utils/sku.js";
 
 export const createNewProduct = async (req, res) => {
   const {
@@ -21,7 +22,6 @@ export const createNewProduct = async (req, res) => {
     isFeatured,
     metaTitle,
     metaDescription,
-    slug,
     minOrderQuantity,
     maxOrderQuantity,
     shippingClass,
@@ -34,13 +34,23 @@ export const createNewProduct = async (req, res) => {
     !description ||
     !shippingDescription ||
     !instructions ||
-    !images ||
+    // !images ||
     !category ||
     !subCategory
   ) {
     return res.status(400).json({
       success: false,
       message: "Please provide all required fields",
+      errors: [
+        !name && "Name is required",
+        !price && "Price is required",
+        !description && "Description is required",
+        !shippingDescription && "Shipping description is required",
+        !instructions && "Instructions are required",
+        !images && "Images are required",
+        !category && "Category is required",
+        !subCategory && "Sub-category is required",
+      ].filter(Boolean),
     });
   }
 
@@ -88,6 +98,7 @@ export const createNewProduct = async (req, res) => {
       });
     }
 
+    // Generate a unique SKU for the product
     const sku = await generateUniqueSKU(name);
 
     if (!sku) {
@@ -96,6 +107,9 @@ export const createNewProduct = async (req, res) => {
         message: "Failed to generate unique SKU",
       });
     }
+
+    // Generate a slug from the product name
+    const slug = await generateSlug(name);
 
     const newProduct = await Product.create({
       name,
@@ -146,9 +160,8 @@ export const createNewProduct = async (req, res) => {
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({ isActive: true })
-      .select("-__v -createdAt -updatedAt")
-      .populate("category", "name")
-      .populate("subCategory", "name")
+      .populate("category", "-createdAt -updatedAt")
+      .populate("subCategory", "-createdAt -updatedAt")
       .sort({ createdAt: -1 });
 
     if (!products || products.length === 0) {
@@ -177,7 +190,6 @@ export const getProductById = async (req, res) => {
   const { id: _id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
-    
     return res.status(400).json({
       success: false,
       message: "Invalid product ID",
@@ -207,6 +219,39 @@ export const getProductById = async (req, res) => {
       success: false,
       message: "Internal server error",
       error: error.message,
+    });
+  }
+};
+
+export const getProductBySlug = async (req, res) => {
+  const { slug } = req.params;
+  if (!slug) {
+    return res.status(400).json({
+      success: false,
+      message: "Slug is required",
+    });
+  }
+  try {
+    const productBySlug = await Product.find({ slug, isActive: true })
+      .populate("category", "name")
+      .populate("subCategory", "name");
+    if (!productBySlug || productBySlug.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Product retrieved successfully",
+      result: productBySlug[0], // Assuming slug is unique, we return the first product
+    });
+  } catch (error) {
+    console.error("Error retrieving product by slug:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error,
     });
   }
 };

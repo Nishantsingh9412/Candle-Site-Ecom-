@@ -1,177 +1,61 @@
-import { useState, useMemo } from "react";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
+import { useState, useMemo, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { getAllProductsAction } from "../../redux/action/product";
 
 const Shop = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [sortBy, setSortBy] = useState("Featured");
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedProductTypes, setSelectedProductTypes] = useState([]);
 
-  const products = [
-    {
-      id: 1,
-      name: "Amour Candle",
-      price: 725,
-      image: "https://niana.co/cdn/shop/files/Amour_800x.jpg?v=1707647515",
-      sale: false,
-      category: "Signature Range",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 2,
-      name: "Aranya Candle",
-      price: 1190,
-      originalPrice: 1700,
-      discount: "30% Off",
-      image: "https://niana.co/cdn/shop/products/Aranya-pichi_800x.jpg?v=1702540461",
-      sale: true,
-      category: "Spring Summer Collection",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 3,
-      name: "Baby Powder Candle",
-      price: 925,
-      image:
-        "https://niana.co/cdn/shop/products/BabyPowder4_800x.jpg?v=1702527460",
-      sale: false,
-      category: "Timeless Collection",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 4,
-      name: "Balsam & Cedar Candle",
-      price: 925,
-      image:
-        "https://placehold.co/300x400/f3f4f6/374151?text=Balsam+Cedar+Candle",
-      soldOut: true,
-      reviews: 8,
-      rating: 5,
-      category: "Signature Range",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 5,
-      name: "Lavender Dreams Diffuser",
-      price: 850,
-      image: "https://niana.co/cdn/shop/products/BabyPowder4_800x.jpg?v=1702527460",
-      reviews: 12,
-      rating: 4,
-      category: "Signature Sets",
-      type: "Reed Diffusers",
-    },
-    {
-      id: 6,
-      name: "Vanilla Bliss Travel Tin",
-      price: 450,
-      originalPrice: 600,
-      discount: "25% Off",
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Vanilla+Travel+Tin",
-      sale: true,
-      category: "Travel Tins",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 7,
-      name: "Rose Garden Sachet",
-      price: 299,
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Rose+Sachet",
-      reviews: 6,
-      rating: 5,
-      category: "Spring Summer Collection",
-      type: "Scented Sachets",
-    },
-    {
-      id: 8,
-      name: "Eucalyptus Mint Massage Candle",
-      price: 1250,
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Eucalyptus+Massage",
-      reviews: 15,
-      rating: 4,
-      category: "Body Massage Candles",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 9,
-      name: "Ocean Breeze Poofume",
-      price: 550,
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Ocean+Poofume",
-      reviews: 9,
-      rating: 3,
-      category: "Poofume",
-      type: "Scented Sachets",
-    },
-    {
-      id: 10,
-      name: "Sandalwood Serenity Candle",
-      price: 1150,
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Sandalwood+Candle",
-      reviews: 22,
-      rating: 5,
-      category: "Timeless Collection",
-      type: "Scented Soy Candles",
-    },
-    {
-      id: 11,
-      name: "Citrus Burst Diffuser",
-      price: 750,
-      originalPrice: 950,
-      discount: "20% Off",
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Citrus+Diffuser",
-      sale: true,
-      reviews: 7,
-      rating: 4,
-      category: "Spring Summer Collection",
-      type: "Reed Diffusers",
-    },
-    {
-      id: 12,
-      name: "Midnight Jasmine Travel Set",
-      price: 650,
-      image: "https://placehold.co/300x400/f3f4f6/374151?text=Jasmine+Travel+Set",
-      reviews: 11,
-      rating: 5,
-      category: "Travel Tins",
-      type: "Scented Soy Candles",
-    },
-  ];
+  // Fetch products from Redux store
+  const { products } = useSelector(
+    (state) => state.product || { products: [] }
+  );
 
-  const collections = [
-    "Signature Range",
-    "Spring Summer Collection",
-    "Timeless Collection",
-    "Signature Sets",
-    "Travel Tins",
-    "Body Massage Candles",
-    "Poofume",
-  ];
+  useEffect(() => {
+    dispatch(getAllProductsAction());
+  }, [dispatch]);
 
-  const productTypes = [
-    "Scented Soy Candles",
-    "Reed Diffusers",
-    "Scented Sachets",
-  ];
+  // Extract unique collections and product types from products
+  const collections = useMemo(() => {
+    const set = new Set(
+      products.map((p) => p.category?.CategoryName || p.category || "")
+    );
+    return Array.from(set).filter(Boolean);
+  }, [products]);
+
+  const productTypes = useMemo(() => {
+    const set = new Set(products.map((p) => p.type || "Scented Soy Candles"));
+    return Array.from(set).filter(Boolean);
+  }, [products]);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products.filter((product) => {
+      const categoryName = product.category?.CategoryName || product.category;
+      const typeName = product.type || "Scented Soy Candles";
       const categoryMatch =
         selectedCategories.length === 0 ||
-        selectedCategories.includes(product.category);
+        selectedCategories.includes(categoryName);
       const typeMatch =
         selectedProductTypes.length === 0 ||
-        selectedProductTypes.includes(product.type);
+        selectedProductTypes.includes(typeName);
       return categoryMatch && typeMatch;
     });
 
     switch (sortBy) {
       case "Price, low to high":
-        return filtered.sort((a, b) => a.price - b.price);
+        return filtered.slice().sort((a, b) => a.price - b.price);
       case "Price, high to low":
-        return filtered.sort((a, b) => b.price - a.price);
+        return filtered.slice().sort((a, b) => b.price - a.price);
       case "Alphabetically, A-Z":
-        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+        return filtered.slice().sort((a, b) => a.name.localeCompare(b.name));
       default:
         return filtered;
     }
@@ -200,7 +84,9 @@ const Shop = () => {
     return [...Array(5)].map((_, i) => (
       <span
         key={i}
-        className={`text-lg ${i < rating ? "text-yellow-400" : "text-gray-200"}`}
+        className={`text-lg ${
+          i < rating ? "text-yellow-400" : "text-gray-200"
+        }`}
       >
         ★
       </span>
@@ -218,7 +104,8 @@ const Shop = () => {
             </h1>
             <div className="w-24 h-px bg-stone-300 mx-auto mb-6"></div>
             <p className="text-stone-600 text-lg font-light max-w-2xl mx-auto">
-              Handcrafted with love, our candles bring warmth and tranquility to your space
+              Handcrafted with love, our candles bring warmth and tranquility to
+              your space
             </p>
           </div>
 
@@ -300,7 +187,8 @@ const Shop = () => {
               {/* Results Counter */}
               <div className="flex justify-between items-center mb-8 pb-4 border-b border-stone-200">
                 <p className="text-stone-600 text-sm">
-                  Showing {filteredAndSortedProducts.length} of {products.length} products
+                  Showing {filteredAndSortedProducts.length} of{" "}
+                  {products.length} products
                 </p>
               </div>
 
@@ -316,28 +204,39 @@ const Shop = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredAndSortedProducts.map((product) => (
                     <div
-                      key={product.id}
+                      key={product._id || product.id}
                       className="group cursor-pointer"
-                      onMouseEnter={() => setHoveredProduct(product.id)}
+                      // onClick={() => console.log(`Clicked on product ${product._id || product.id}`)}
+                      onClick={() =>
+                        navigate(`/product/${product.slug}`)
+                      }
+                      onMouseEnter={() =>
+                        setHoveredProduct(product._id || product.id)
+                      }
                       onMouseLeave={() => setHoveredProduct(null)}
                     >
                       <div className="relative overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
                         {/* Product Image */}
                         <div className="relative">
                           <img
-                            src={product.image}
+                            src={
+                              "https://placehold.co/300x400/f3f4f6/374151?text=No+Image"
+                            }
                             alt={product.name}
                             className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
-                          
                           {/* Sale Badge */}
-                          {product.discount && (
-                            <div className="absolute top-4 left-4 bg-stone-800 text-white px-3 py-1 text-xs font-medium rounded">
-                              {product.discount}
-                            </div>
-                          )}
-                          
+                          {product.comparePrice &&
+                            product.comparePrice > product.price && (
+                              <div className="absolute top-4 left-4 bg-stone-800 text-white px-3 py-1 text-xs font-medium rounded">
+                                {Math.round(
+                                  100 -
+                                    (product.price / product.comparePrice) * 100
+                                )}
+                                % Off
+                              </div>
+                            )}
                           {/* Sold Out Overlay */}
                           {product.soldOut && (
                             <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center">
@@ -346,32 +245,33 @@ const Shop = () => {
                               </span>
                             </div>
                           )}
-                          
                           {/* Add to Cart Button */}
-                          {!product.soldOut && hoveredProduct === product.id && (
-                            <div className="absolute inset-x-0 bottom-0 p-4">
-                              <button
-                                onClick={() => handleAddToCart(product.id)}
-                                className="w-full bg-stone-800 text-white py-3 px-4 rounded-md hover:bg-stone-900 transition-colors duration-300 font-medium text-sm"
-                              >
-                                Add to Cart
-                              </button>
-                            </div>
-                          )}
+                          {!product.soldOut &&
+                            hoveredProduct === (product._id || product.id) && (
+                              <div className="absolute inset-x-0 bottom-0 p-4">
+                                <button
+                                  onClick={() =>
+                                    handleAddToCart(product._id || product.id)
+                                  }
+                                  className="w-full bg-stone-800 text-white py-3 px-4 rounded-md hover:bg-stone-900 transition-colors duration-300 font-medium text-sm"
+                                >
+                                  Add to Cart
+                                </button>
+                              </div>
+                            )}
                         </div>
-                        
                         {/* Product Info */}
                         <div className="p-6">
                           <h3 className="text-stone-800 font-medium mb-2 group-hover:text-stone-600 transition-colors">
                             {product.name}
                           </h3>
-                          
                           {/* Price */}
                           <div className="flex items-center gap-2 mb-3">
-                            {product.originalPrice ? (
+                            {product.comparePrice &&
+                            product.comparePrice > product.price ? (
                               <>
                                 <span className="text-stone-400 line-through text-sm">
-                                  ₹{product.originalPrice}
+                                  ₹{product.comparePrice}
                                 </span>
                                 <span className="text-stone-800 font-medium">
                                   ₹{product.price}
@@ -383,15 +283,14 @@ const Shop = () => {
                               </span>
                             )}
                           </div>
-                          
                           {/* Reviews */}
-                          {product.reviews && (
+                          {product.rating && (
                             <div className="flex items-center gap-2">
                               <div className="flex">
                                 {renderStars(product.rating)}
                               </div>
                               <span className="text-stone-500 text-xs">
-                                ({product.reviews})
+                                ({product.reviews || 0})
                               </span>
                             </div>
                           )}

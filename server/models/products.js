@@ -12,27 +12,33 @@ const ProductSchema = new mongoose.Schema(
         ref: "Review",
       },
     ],
-    rating: { type: Number, default: 0, min: 0, max: 5 }, // Average rating
-    description: { type: String, required: true },
-    shippingDescription: { type: String, required: true },  
-    instructions: { type: String, required: true }, 
-    additionalInfo: { type: String, required: false },
-    images: [
-      {
+     // Average rating
+      description: { type: String, required: true },
+      shippingDescription: { type: String, required: true },  
+      instructions: { type: String, required: true }, 
+      additionalInfo: { type: String, required: false },
+      images: {
+        type: [{
         url: { type: String, required: true },
         public_id: { type: String, required: true },
+        }],
+        default: [
+        {
+          url: "https://via.placeholder.com/480x634?text=Product+Image",
+          public_id: "default_product_image"
+        }
+        ]
       },
-    ],
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
-    subCategory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SubCategory",
-      required: true,
-    },
+      category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+        required: true,
+      },
+      subCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SubCategory",
+        required: true,
+      },
     // Additional fields
     sku: { type: String, unique: true , required: true}, // Stock Keeping Unit
     weight: { type: String }, // Product weight for shipping

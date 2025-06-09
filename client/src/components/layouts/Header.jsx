@@ -80,7 +80,7 @@ const Header = () => {
               {/* Logo */}
               <div className="flex-shrink-0">
                 <div className="text-2xl lg:text-3xl font-serif italic text-gray-800">
-                  Niana
+                Niana
                 </div>
               </div>
 
