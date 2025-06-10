@@ -47,7 +47,7 @@ export const createNewProduct = async (req, res) => {
         !description && "Description is required",
         !shippingDescription && "Shipping description is required",
         !instructions && "Instructions are required",
-        !images && "Images are required",
+        // !images && "Images are required",
         !category && "Category is required",
         !subCategory && "Sub-category is required",
       ].filter(Boolean),
@@ -56,6 +56,7 @@ export const createNewProduct = async (req, res) => {
 
   try {
     if (!mongoose.Types.ObjectId.isValid(category)) {
+      console.log("Cat Id", category);
       return res.status(400).json({
         success: false,
         message: "Invalid category ID",

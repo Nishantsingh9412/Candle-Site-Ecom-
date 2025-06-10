@@ -1,4 +1,5 @@
 import express from 'express';
+
 import {
   createNewProduct,
   getAllProducts,
@@ -7,12 +8,13 @@ import {
   deleteProductById,
   getProductBySlug,
 } from '../controller/productController.js';
+import { uploadImage } from '../middleware/fileUpload.js';
 
 const router = express.Router();
 
 // Product Routes
 // Create a new product
-router.post('/create', createNewProduct);
+router.post('/create', uploadImage('images', 2), createNewProduct);
 // Get all products
 router.get('/get-all-products', getAllProducts);
 // Get a single product by ID

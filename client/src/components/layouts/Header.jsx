@@ -41,8 +41,8 @@ const Header = () => {
     ...DynamicNavItems,
     // { name: 'SHOP', path: '/shop' },
     // { name: 'COLLECTIONS', path: '/collections' },
-    { name: "SALE", path: "/sale" },
-    { name: "BESPOKE", path: "/bespoke" },
+    // { name: "SALE", path: "/sale" },
+    // { name: "BESPOKE", path: "/bespoke" },
     // { name: "STOCKISTS", path: "/stockists" },
     { name: "CONTACT US", path: "/contact-us" },
   ];

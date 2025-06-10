@@ -49,6 +49,16 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
     shippingClass: "",
   });
 
+  const UploadProductImages = (files) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: Array.from(files),
+    }));
+
+
+    console.log("Selected images:", files);
+  };
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -68,21 +78,56 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting product data:", formData);
-    const testImages = [
-      {
-        url: "https://niana.co/cdn/shop/files/Amour4_compact.jpg?v=1707647515",
-        public_id: "products/candle/amour4",
-      },
-      {
-        url: "https://niana.co/cdn/shop/files/Amour3_compact.jpg?v=1707647506",
-        public_id: "products/candle/amour3",
-      },
-    ];
 
-    setFormData((prev) => ({
-      ...prev,
-      images: testImages,
-    }));
+    // const fo
+
+    const submittingData = new FormData();
+    submittingData.append("name", formData.name);
+    submittingData.append("price", formData.price);
+    submittingData.append("comparePrice", formData.comparePrice);
+    submittingData.append("description", formData.description);
+    submittingData.append("shippingDescription", formData.shippingDescription);
+    submittingData.append("instructions", formData.instructions);
+    submittingData.append("additionalInfo", formData.additionalInfo);
+    submittingData.append("category", formData.category);
+    submittingData.append("subCategory", formData.subCategory);
+    submittingData.append("weight", formData.weight);
+    submittingData.append("tags", formData.tags);
+    submittingData.append("isActive", formData.isActive);
+    submittingData.append("isFeatured", formData.isFeatured);
+    submittingData.append("metaTitle", formData.metaTitle);
+    submittingData.append("metaDescription", formData.metaDescription);
+    submittingData.append("minOrderQuantity", formData.minOrderQuantity);
+    submittingData.append("maxOrderQuantity", formData.maxOrderQuantity);
+    submittingData.append("shippingClass", formData.shippingClass);
+    formData.images.forEach((image, index) => {
+      if (typeof image === "string") {
+        // If image is a URL, we can skip appending it as a file
+        submittingData.append(`images[${index}]`, image);
+      } else {
+        // If image is a File object, append it directly
+        submittingData.append("images", image);
+      }
+    });
+    // For testing, you can use hardcoded image URLs
+    // Uncomment the following lines to use hardcoded images for testing
+
+
+    // const testImages = [
+    //   {
+    //     url: "https://niana.co/cdn/shop/files/Amour4_compact.jpg?v=1707647515",
+    //     public_id: "products/candle/amour4",
+    //   },
+    //   {
+    //     url: "https://niana.co/cdn/shop/files/Amour3_compact.jpg?v=1707647506",
+    //     public_id: "products/candle/amour3",
+    //   },
+    // ];
+
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   images: testImages,
+    // }));
     const productData = {
       ...formData,
       tags: formData.tags.split(",").map((tag) => tag.trim()),
@@ -349,6 +394,24 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
                 Featured
               </label>
             </div>
+
+            {/* input type select for file for multiple image upload  */}
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Images (URLs)
+              </label>
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                onChange={(e) => UploadProductImages(e.target.files)}
+                // onChange={(e) => {
+                // }}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition resize-none bg-gray-50 hover:bg-gray-100 cursor-pointer"
+              />
+            </div>
+
             <div className="col-span-2 flex justify-end space-x-3 mt-4">
               <button
                 type="button"

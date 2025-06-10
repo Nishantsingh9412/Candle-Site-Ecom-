@@ -219,9 +219,8 @@ const Shop = () => {
                         {/* Product Image */}
                         <div className="relative">
                           <img
-                            src={
-                              "https://placehold.co/300x400/f3f4f6/374151?text=No+Image"
-                            }
+                            // src={product.images?.[0]?.url || "https://placehold.co/530x700"}               
+                            src="https://placehold.co/530X700?text=No+Image+Available"                          
                             alt={product.name}
                             className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"

@@ -12,7 +12,7 @@ const SingleProduct = () => {
   const [activeTab, setActiveTab] = useState("description");
 
   const slugProductData = useSelector((state) => state.product?.slugProduct || {});
-  console.log(slugProductData);
+  console.log("slugProductData   : ----> "   , slugProductData);
 
   const handleQuantityChange = (change) => {
     setQuantity((prev) => Math.max(1, prev + change));
@@ -47,6 +47,8 @@ const SingleProduct = () => {
     }
   };
 
+  console.log("slugProductData image : ---->  ", slugProductData.images[0].url);
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
@@ -59,7 +61,8 @@ const SingleProduct = () => {
         {/* Product Image */}
         <div className="flex justify-center">
           <img
-            src={slugProductData.images?.[0]?.url || "https://via.placeholder.com/480x634?text=No+Image"}
+            // src={slugProductData?.images[0]?.url || "https://placehold.co/530X700"}
+            src="https://placehold.co/530X700?text=No+Image+Available"
             alt={slugProductData.name}
             className="w-full max-w-lg rounded-lg shadow-lg"
           />
@@ -123,7 +126,7 @@ const SingleProduct = () => {
 
           {/* Product Information Sections */}
           <div className="space-y-4 mt-8">
-            {[
+            {[  
               "DESCRIPTION",
               "CUSTOMER REVIEWS",
               "SHIPPING",
