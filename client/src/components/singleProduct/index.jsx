@@ -7,17 +7,16 @@ import { getProductBySlugAction } from "../../redux/action/product";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
-  const {slug} = useParams();
+  const { slug } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
 
-  const slugProductData = useSelector((state) => state.product?.slugProduct || {});
-  console.log("slugProductData   : ----> "   , slugProductData);
-
+  const slugProductData = useSelector(
+    (state) => state.product?.slugProduct || {}
+  );
   const handleQuantityChange = (change) => {
     setQuantity((prev) => Math.max(1, prev + change));
   };
-
   useEffect(() => {
     dispatch(getProductBySlugAction(slug));
   }, [dispatch, slug]);
@@ -28,44 +27,69 @@ const SingleProduct = () => {
 
   const renderTabContent = (section) => {
     switch (section) {
-      case 'description':
+      case "description":
         return slugProductData.description;
-      case 'customer reviews':
-        return slugProductData.Reviews?.length > 0 
+      case "customer reviews":
+        return slugProductData.Reviews?.length > 0
           ? slugProductData.Reviews.map((review, index) => (
-              <div key={index} className="mb-2">{review}</div>
+              <div key={index} className="mb-2">
+                {review}
+              </div>
             ))
           : "No reviews yet.";
-      case 'shipping':
+      case "shipping":
         return slugProductData.shippingDescription;
-      case 'instructions':
+      case "instructions":
         return slugProductData.instructions;
-      case 'additional information':
+      case "additional information":
         return slugProductData.additionalInfo;
       default:
         return `Content for ${section} section goes here...`;
     }
   };
 
-  console.log("slugProductData image : ---->  ", slugProductData.images[0].url);
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-8">
-        <span>Home</span> <span className="mx-2"> </span>{" "}
+        <span>Home</span> <span className="mx-2">/</span>
         <span>{slugProductData.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Product Image */}
-        <div className="flex justify-center">
-          <img
-            // src={slugProductData?.images[0]?.url || "https://placehold.co/530X700"}
-            src="https://placehold.co/530X700?text=No+Image+Available"
-            alt={slugProductData.name}
-            className="w-full max-w-lg rounded-lg shadow-lg"
-          />
+        {/* Product Image Gallery */}
+        <div className="space-y-4">
+          {/* Main Image */}
+          <div className="flex justify-center">
+            <img
+              id="mainImage"
+              src={
+                slugProductData.images?.[0]
+                  ? `${import.meta.env.VITE_API_URL}/uploads/${slugProductData.images[0]}`
+                  : "https://placehold.co/530x700?text=No+Image+Available"
+              }
+              alt={slugProductData.name}
+              className="w-full max-w-lg rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Thumbnail Images */}
+          {slugProductData.images && slugProductData.images.length > 1 && (
+            <div className="flex justify-center space-x-2 overflow-x-auto">
+              {slugProductData.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={`${import.meta.env.VITE_API_URL}/uploads/${image}`}
+                  alt={`${slugProductData.name} ${index + 1}`}
+                  className="w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-300 transition-colors"
+                  onClick={() => {
+                    const mainImg = document.getElementById('mainImage');
+                    mainImg.src = `${import.meta.env.VITE_API_URL}/uploads/${image}`;
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Product Details */}
@@ -106,7 +130,12 @@ const SingleProduct = () => {
                 min={slugProductData.minOrderQuantity || 1}
                 max={slugProductData.maxOrderQuantity || 100}
                 onChange={(e) =>
-                  setQuantity(Math.max(slugProductData.minOrderQuantity || 1, parseInt(e.target.value) || 1))
+                  setQuantity(
+                    Math.max(
+                      slugProductData.minOrderQuantity || 1,
+                      parseInt(e.target.value) || 1
+                    )
+                  )
                 }
                 className="w-16 text-center py-2 border-none outline-none"
               />
@@ -126,7 +155,7 @@ const SingleProduct = () => {
 
           {/* Product Information Sections */}
           <div className="space-y-4 mt-8">
-            {[  
+            {[
               "DESCRIPTION",
               "CUSTOMER REVIEWS",
               "SHIPPING",
@@ -145,9 +174,7 @@ const SingleProduct = () => {
                 </button>
                 {activeTab === section.toLowerCase() && (
                   <div className="pb-4 text-gray-600">
-                    <p>
-                      {renderTabContent(section.toLowerCase())}
-                    </p>
+                    <p>{renderTabContent(section.toLowerCase())}</p>
                   </div>
                 )}
               </div>

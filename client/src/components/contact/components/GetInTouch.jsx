@@ -156,16 +156,14 @@ const GetInTouch = () => {
                     <MapPin size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-lg mb-2">
-                      Studio Address
-                    </h4>
+                    <h4 className="font-semibold text-lg mb-2">Address</h4>
                     <p className="text-gray-300 leading-relaxed">
-                      392, Ground Floor, Road Number Zero, Ghitorni,
+                      60, Rathod Nagar, Vaishali Nagar, Jaipur, ,
                       <br />
-                      New Delhi 110030, India
+                      Rajasthan 302021 , India
                     </p>
                     <p className="text-gray-300 mt-2">
-                      <strong>Phone:</strong> +91-9910049953
+                      <strong>Phone:</strong> +91-9503527136
                     </p>
                     <div className="flex items-center mt-2 text-gray-300">
                       <Clock className="mr-2" size={14} />
@@ -185,7 +183,7 @@ const GetInTouch = () => {
                   <div>
                     <h4 className="font-semibold text-lg mb-2">Email Us</h4>
                     <p className="text-blue-300 hover:text-blue-200 transition-colors cursor-pointer">
-                      info@example.co
+                      scentedgleam@gmail.com
                     </p>
                   </div>
                 </div>
@@ -197,7 +195,7 @@ const GetInTouch = () => {
                   <div>
                     <h4 className="font-semibold text-lg mb-2">WhatsApp</h4>
                     <p className="text-green-300 hover:text-green-200 transition-colors cursor-pointer">
-                      +91-9990508313
+                      +91-9503527136
                     </p>
                   </div>
                 </div>
@@ -205,22 +203,22 @@ const GetInTouch = () => {
                 <div className="pt-6 border-t border-gray-700">
                   <h4 className="font-semibold text-lg mb-4">Follow Us</h4>
                   <div className="flex gap-4">
-                    <a
+                    {/* <a
                       href="#"
                       aria-label="WhatsApp"
                       className="bg-green-500 p-3 rounded-full transition-all duration-300 hover:bg-green-600 hover:scale-110"
                     >
                       <MessageSquare size={20} />
-                    </a>
+                    </a> */}
                     <a
-                      href="#"
+                      href="https://www.instagram.com/scentedgleam?utm_source=qr&igsh=MXM1ZmM2dnBycjVxYQ=="
                       aria-label="Instagram"
                       className="bg-pink-500 p-3 rounded-full transition-all duration-300 hover:bg-pink-600 hover:scale-110"
                     >
                       <Instagram size={20} />
                     </a>
                     <a
-                      href="#"
+                      href="https://www.facebook.com/profile.php?id=61565428497592&mibextid=JRoKGi"
                       aria-label="Facebook"
                       className="bg-blue-600 p-3 rounded-full transition-all duration-300 hover:bg-blue-700 hover:scale-110"
                     >

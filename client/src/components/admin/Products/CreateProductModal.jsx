@@ -55,7 +55,6 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
       images: Array.from(files),
     }));
 
-
     console.log("Selected images:", files);
   };
 
@@ -79,8 +78,6 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
     e.preventDefault();
     console.log("Submitting product data:", formData);
 
-    // const fo
-
     const submittingData = new FormData();
     submittingData.append("name", formData.name);
     submittingData.append("price", formData.price);
@@ -92,7 +89,6 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
     submittingData.append("category", formData.category);
     submittingData.append("subCategory", formData.subCategory);
     submittingData.append("weight", formData.weight);
-    submittingData.append("tags", formData.tags);
     submittingData.append("isActive", formData.isActive);
     submittingData.append("isFeatured", formData.isFeatured);
     submittingData.append("metaTitle", formData.metaTitle);
@@ -100,39 +96,22 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
     submittingData.append("minOrderQuantity", formData.minOrderQuantity);
     submittingData.append("maxOrderQuantity", formData.maxOrderQuantity);
     submittingData.append("shippingClass", formData.shippingClass);
-    formData.images.forEach((image, index) => {
-      if (typeof image === "string") {
-        // If image is a URL, we can skip appending it as a file
-        submittingData.append(`images[${index}]`, image);
-      } else {
-        // If image is a File object, append it directly
+
+    // Convert tags to array
+    const tagArray = formData.tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+    tagArray.forEach((tag) => submittingData.append("tags[]", tag));
+
+    // Append all image files
+    formData.images.forEach((image) => {
+      if (image instanceof File) {
         submittingData.append("images", image);
       }
     });
-    // For testing, you can use hardcoded image URLs
-    // Uncomment the following lines to use hardcoded images for testing
 
-
-    // const testImages = [
-    //   {
-    //     url: "https://niana.co/cdn/shop/files/Amour4_compact.jpg?v=1707647515",
-    //     public_id: "products/candle/amour4",
-    //   },
-    //   {
-    //     url: "https://niana.co/cdn/shop/files/Amour3_compact.jpg?v=1707647506",
-    //     public_id: "products/candle/amour3",
-    //   },
-    // ];
-
-    // setFormData((prev) => ({
-    //   ...prev,
-    //   images: testImages,
-    // }));
-    const productData = {
-      ...formData,
-      tags: formData.tags.split(",").map((tag) => tag.trim()),
-    };
-    dispatch(createProductAction(productData)).then((res) => {
+    dispatch(createProductAction(submittingData)).then((res) => {
       if (res.success) {
         toast.success("Product created successfully");
         onClose();

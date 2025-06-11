@@ -3,13 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 
-import {
-  Home, 
-  User, 
-  Settings,
-  LogOut,
-  ShoppingBasket 
-} from "lucide-react";
+import { Home, User, Settings, LogOut, ShoppingBasket } from "lucide-react";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -67,7 +61,8 @@ const Dashboard = () => {
           </li>
         </ul>
         <footer className="p-4 bg-gray-900 text-center text-sm">
-          © 2025 Niana
+          &copy; Copyright {new Date().getFullYear()}
+          &nbsp; Scented Gleam{" "}
         </footer>
       </aside>
       <main className="flex-1 p-6">

@@ -11,7 +11,6 @@ const Header = () => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-
   const categories = useSelector((state) => state.category);
   console.log(categories);
   // Dynamic navigation items based on categories
@@ -23,13 +22,12 @@ const Header = () => {
     name: category.CategoryName.toUpperCase(),
     path: category.CategoryName,
     // path: category.CategoryName === "All" ? "/all" : `/category/${category._id}`,
-  }))
+  }));
   // .concat(subCategories?.subCategories?.map((subCategory) => ({
   //   name: subCategory.SubCategoryName,
   //   path: `/subcategory/${subCategory._id}`,
   // }))
-// );
-
+  // );
 
   useEffect(() => {
     dispatch(GetAllCategoriesAction());
@@ -80,7 +78,7 @@ const Header = () => {
               {/* Logo */}
               <div className="flex-shrink-0">
                 <div className="text-2xl lg:text-3xl font-serif italic text-gray-800">
-                Niana
+                  Scented Gleam
                 </div>
               </div>
 

@@ -38,7 +38,6 @@ const AllRoutes = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:slug" element={<SingleProduct />} />
-
       </Route>
 
       {/* Admin Routes */}

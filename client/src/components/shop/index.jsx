@@ -207,9 +207,7 @@ const Shop = () => {
                       key={product._id || product.id}
                       className="group cursor-pointer"
                       // onClick={() => console.log(`Clicked on product ${product._id || product.id}`)}
-                      onClick={() =>
-                        navigate(`/product/${product.slug}`)
-                      }
+                      onClick={() => navigate(`/product/${product.slug}`)}
                       onMouseEnter={() =>
                         setHoveredProduct(product._id || product.id)
                       }
@@ -219,8 +217,15 @@ const Shop = () => {
                         {/* Product Image */}
                         <div className="relative">
                           <img
-                            // src={product.images?.[0]?.url || "https://placehold.co/530x700"}               
-                            src="https://placehold.co/530X700?text=No+Image+Available"                          
+                            // src={product.images?.[0] || "https://placehold.co/530x700"}
+                            src={
+                              product.images?.[0]
+                                ? `${import.meta.env.VITE_API_URL}/uploads/${
+                                    product.images[0]
+                                  }`
+                                : "https://placehold.co/530x700?text=No+Image+Available"
+                            }
+                            // src="https://placehold.co/530X700?text=No+Image+Available"
                             alt={product.name}
                             className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"

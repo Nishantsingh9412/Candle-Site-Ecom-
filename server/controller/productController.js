@@ -13,7 +13,6 @@ export const createNewProduct = async (req, res) => {
     shippingDescription,
     instructions,
     additionalInfo,
-    images,
     category,
     subCategory,
     weight,
@@ -28,13 +27,16 @@ export const createNewProduct = async (req, res) => {
     totalSales,
   } = req.body;
 
+  const uploadedImages = req.files?.map((file) => file.filename);
+
   if (
     !name ||
     !price ||
     !description ||
     !shippingDescription ||
     !instructions ||
-    // !images ||
+    !uploadedImages?.length ||
+    !tags ||
     !category ||
     !subCategory
   ) {
@@ -47,12 +49,14 @@ export const createNewProduct = async (req, res) => {
         !description && "Description is required",
         !shippingDescription && "Shipping description is required",
         !instructions && "Instructions are required",
-        // !images && "Images are required",
+        !uploadedImages?.length && "Images are required",
         !category && "Category is required",
         !subCategory && "Sub-category is required",
       ].filter(Boolean),
     });
   }
+
+  // console.log("Images ", images);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(category)) {
@@ -120,7 +124,7 @@ export const createNewProduct = async (req, res) => {
       shippingDescription,
       instructions,
       additionalInfo,
-      images,
+      images: uploadedImages,
       category,
       subCategory,
       sku,
