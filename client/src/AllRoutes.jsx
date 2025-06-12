@@ -18,6 +18,7 @@ import SingleProduct from "./components/singleProduct";
 import Category from "./components/admin/Category/index";
 import SubCategory from "./components/admin/SubCategory/index";
 import AdminProducts from "./components/admin/Products/index";
+import CollectionsAdmin from "./components/admin/Collections/index";
 
 // Admin Components End 
 
@@ -53,7 +54,7 @@ const AllRoutes = () => {
         <Route path="category" element={<Category />} />
         <Route path="sub-category" element={<SubCategory />} /> 
         <Route path="products" element={<AdminProducts />} /> 
-        
+        <Route path="collections-admin" element={<CollectionsAdmin />} /> 
 
       </Route>
 

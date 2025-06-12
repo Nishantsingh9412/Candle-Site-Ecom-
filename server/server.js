@@ -6,11 +6,12 @@ import cors from "cors";
 import path from "path";
 
 import authRoutes from "./routes/auth.js";
-import otpRoutes from "./routes/otpRoutes.js";
-import CategoryRoutes from "./routes/categoryRoutes.js";
-import subCategoryRoutes from "./routes/subCategoryRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import reviewRoutes from "./routes/reviewRoutes.js"
+import otpRoutes from "./routes/otp.js";
+import CategoryRoutes from "./routes/category.js";
+import subCategoryRoutes from "./routes/subCategory.js";
+import productRoutes from "./routes/product.js";
+import reviewRoutes from "./routes/review.js"
+import collectionRoutes from "./routes/collection.js";
 // import ProductRoutes from "./routes/productRoutes.js";
 // import progressRoute from "./routes/progress.js";
 
@@ -34,6 +35,7 @@ app.use('/api/v1/category',CategoryRoutes);
 app.use('/api/v1/sub-category', subCategoryRoutes);
 app.use('/api/v1/review', reviewRoutes)
 app.use('/api/v1/products',productRoutes)
+app.use('/api/v1/collections', collectionRoutes);
 // app.use('/api/v1/wishlist', WishlistRoutes); 
 // app.use('/api/v1/product', ProductRoutes);  
 
@@ -58,7 +60,7 @@ if (process.env.NODE_ENV === 'production') {
 
 } else {
   app.get('/', (req, res) => {
-    res.send("Welcome to Flock AI API's ")
+    res.send("Welcome to Scented Gleam's API's ")
   })
 }
 // ----------------------------deployment--------------------------------------

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 
-import { Home, User, Settings, LogOut, ShoppingBasket } from "lucide-react";
+import { Home, User, Settings, LogOut, ShoppingBasket, Boxes } from "lucide-react";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -50,6 +50,12 @@ const Dashboard = () => {
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
               <ShoppingBasket />
               <span>Products</span>
+            </li>
+          </Link>
+          <Link to="/admin/collections">
+            <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
+              <Boxes />
+              <span>Collections</span>
             </li>
           </Link>
           <li

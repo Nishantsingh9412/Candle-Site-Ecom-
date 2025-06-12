@@ -1,4 +1,4 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/0d6a48fd-5547-40cb-85ba-e9541dd1f973/resourceGroups/appsvc_linux_eastus/providers/Microsoft.Web/sites/niana",
+    "appService.defaultWebAppToDeploy": "/subscriptions/0d6a48fd-5547-40cb-85ba-e9541dd1f973/resourceGroups/DefaultResourceGroup-CCAN/providers/Microsoft.Web/sites/scentedgleam",
     "appService.deploySubpath": "server"
 }
