@@ -45,7 +45,13 @@ const ProductSchema = new mongoose.Schema(
     isFeatured: { type: Boolean, default: false },
     metaTitle: { type: String }, // SEO
     metaDescription: { type: String }, // SEO
-    slug: { type: String, requires: true, unique: true }, // URL friendly name
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    }, // URL friendly name
     minOrderQuantity: { type: Number, default: 1 },
     maxOrderQuantity: { type: Number },
     shippingClass: { type: String, enum: ["Free", "Standard", "Express"] }, // Free, Standard, Express

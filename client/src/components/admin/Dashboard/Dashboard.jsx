@@ -52,7 +52,7 @@ const Dashboard = () => {
               <span>Products</span>
             </li>
           </Link>
-          <Link to="/admin/collections">
+          <Link to="/admin/collections-admin">
             <li className="flex items-center space-x-3 hover:bg-gray-700 p-2 rounded cursor-pointer">
               <Boxes />
               <span>Collections</span>

@@ -62,7 +62,7 @@ export const DeleteProductByIdAPI = (id) => API.delete(`/api/v1/products/delete-
 
 
 // Collection APIs
-// Get all collections
+// Create new Collection
 export const CreateCollectionAPI = (newCollection) => API.post('/api/v1/collections/create', newCollection);
 // Get all Collections
 export const GetAllCollectionsAPI = () => API.get('/api/v1/collections/get-all-collections');
@@ -72,4 +72,3 @@ export const GetCollectionByIdAPI = (id) => API.get(`/api/v1/collections/get-col
 export const UpdateCollectionByIdAPI = (id, updatedCollection) => API.patch(`/api/v1/collections/update-collection/${id}`, updatedCollection);
 // Delete Collection by Id
 export const DeleteCollectionByIdAPI = (id) => API.delete(`/api/v1/collections/delete-collection/${id}`);
-

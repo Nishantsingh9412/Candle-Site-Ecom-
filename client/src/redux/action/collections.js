@@ -14,7 +14,6 @@ export const createCollectionAction = (newCollection) => async (dispatch) => {
 export const getAllCollectionsAction = () => async (dispatch) => {
   try {
     const { data } = await api.GetAllCollectionsAPI();
-    console.log("Data from getAllCollectionsAction", data);
     dispatch({ type: "GET_ALL_COLLECTIONS", data: data?.result });
     return { success: true, message: data?.message };
   } catch (err) {

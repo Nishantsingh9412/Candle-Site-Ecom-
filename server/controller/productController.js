@@ -114,7 +114,26 @@ export const createNewProduct = async (req, res) => {
     }
 
     // Generate a slug from the product name
-    const slug = await generateSlug(name);
+    const slug = await generateSlug(name, Product);
+
+    if (!slug) {
+      return res.status(500).json({
+        success: false,
+        message: "something went wrong",
+      });
+    }
+
+    // check if the slug already exists
+    const existingProduct = await Product.findOne({
+      slug,
+    });
+
+    if (existingProduct) {
+      return res.status(400).json({
+        success: false,
+        message: "Product with this slug already exists",
+      });
+    }
 
     const newProduct = await Product.create({
       name,
@@ -240,6 +259,7 @@ export const getProductBySlug = async (req, res) => {
     const productBySlug = await Product.find({ slug, isActive: true })
       .populate("category", "name")
       .populate("subCategory", "name");
+
     if (!productBySlug || productBySlug.length === 0) {
       return res.status(404).json({
         success: false,
@@ -280,7 +300,6 @@ export const updateProductById = async (req, res) => {
     isFeatured,
     metaTitle,
     metaDescription,
-    slug,
     minOrderQuantity,
     maxOrderQuantity,
     shippingClass,
@@ -293,6 +312,21 @@ export const updateProductById = async (req, res) => {
     });
   }
   try {
+    const slug = await generateSlug(name, Product);
+
+    // Check if a product with the same slug already exists
+    const existingProductWithSlug = await Product.findOne({
+      slug,
+      _id: { $ne: _id }, // Exclude the current product being updated
+    });
+
+    if (existingProductWithSlug) {
+      return res.status(400).json({
+        success: false,
+        message: "Product with same slug already exists",
+      });
+    }
+
     const UpdatedProduct = await Product.findByIdAndUpdate(
       _id,
       {

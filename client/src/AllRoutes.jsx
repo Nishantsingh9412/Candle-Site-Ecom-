@@ -12,6 +12,7 @@ import AboutUs from "./components/AboutUs";
 import Shop from "./components/shop/index";
 import Collections from "./components/collections";
 import SingleProduct from "./components/singleProduct";
+import SingleCollection from "./components/singleCollection";
 
 
 // Admin Components Start
@@ -19,6 +20,7 @@ import Category from "./components/admin/Category/index";
 import SubCategory from "./components/admin/SubCategory/index";
 import AdminProducts from "./components/admin/Products/index";
 import CollectionsAdmin from "./components/admin/Collections/index";
+
 
 // Admin Components End 
 
@@ -39,6 +41,7 @@ const AllRoutes = () => {
         <Route path="/shop" element={<Shop />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:slug" element={<SingleProduct />} />
+        <Route path="/collection/:slug" element={<SingleCollection />} />
       </Route>
 
       {/* Admin Routes */}

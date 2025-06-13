@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
-import Collection from "../models/collections.js";
+import ProductCollection from "../models/collections.js";
+import generateSlug from "../utils/slug.js";
 
 export const createCollection = async (req, res) => {
   const { title, description, image, products } = req.body;
 
   try {
-    if (!title) {
+    if (!title || !description || !image || !products) {
       return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
@@ -19,9 +20,26 @@ export const createCollection = async (req, res) => {
       });
     }
 
-    const newCollection = await Collection.create({
+    // Create a slug from the title
+    const slug = await generateSlug(title, ProductCollection);
+
+    // check if collection with the same slug already exists
+    const existingSlug = await ProductCollection.findOne({
+      slug,
+    });
+
+    // If a collection with the same title exists, return an error
+    if (existingSlug) {
+      return res.status(400).json({
+        success: false,
+        message: "Collection with this title already exists",
+      });
+    }
+
+    const newCollection = await ProductCollection.create({
       title,
       description,
+      slug,
       image,
       products,
     });
@@ -51,7 +69,7 @@ export const createCollection = async (req, res) => {
 
 export const getAllCollections = async (req, res) => {
   try {
-    const collections = await Collection.find({}).populate("products");
+    const collections = await ProductCollection.find({}).populate("products");
 
     if (!collections || collections.length === 0) {
       return res.status(404).json({
@@ -73,6 +91,33 @@ export const getAllCollections = async (req, res) => {
   }
 };
 
+export const getCollectionBySlug = async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    const collectionSingle = await ProductCollection.findOne({ slug }).populate(
+      "products"
+    );
+
+    if (!collectionSingle) {
+      return res.status(404).json({
+        success: false,
+        message: "Collection not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      result: collectionSingle,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
 export const getCollectionById = async (req, res) => {
   const { id: _id } = req.params;
 
@@ -84,7 +129,7 @@ export const getCollectionById = async (req, res) => {
   }
 
   try {
-    const collectionSingle = await Collection.findById(_id).populate(
+    const collectionSingle = await ProductCollection.findById(_id).populate(
       "products"
     );
 
@@ -110,7 +155,12 @@ export const getCollectionById = async (req, res) => {
 
 export const updateCollection = async (req, res) => {
   const { id: _id } = req.params;
-  const { title, description, image, products } = req.body;
+  const { 
+    title,
+    description,
+    image,
+    products
+  } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(400).json({
@@ -120,9 +170,24 @@ export const updateCollection = async (req, res) => {
   }
 
   try {
-    const updatedCollection = await Collection.findByIdAndUpdate(
+    const slug = await generateSlug(title, ProductCollection);
+
+    // Check if a collection with the same slug already exists
+    const existingCollectionWithSlug = await ProductCollection.findOne({
+      slug,
+      _id: { $ne: _id }, // Exclude the current collection being updated
+    });
+
+    if (existingCollectionWithSlug) {
+      return res.status(400).json({
+        success: false,
+        message: "Collection with same slug already exists",
+      });
+    }
+
+    const updatedCollection = await ProductCollection.findByIdAndUpdate(
       _id,
-      { title, description, image, products },
+      { title, description, slug, image, products },
       { new: true }
     );
 
@@ -158,7 +223,7 @@ export const deleteCollection = async (req, res) => {
   }
 
   try {
-    const deletedCollection = await Collection.findByIdAndDelete(_id);
+    const deletedCollection = await ProductCollection.findByIdAndDelete(_id);
 
     if (!deletedCollection) {
       return res.status(404).json({
