@@ -32,6 +32,18 @@ export const getSingleCollectionAction = (id) => async (dispatch) => {
     return { success: false, message: err?.response?.data?.message };
   }
 };
+
+export const getCollectionBySlugAction = (slug) => async (dispatch) => {
+  try {
+    const { data } = await api.GetCollectionBySlugAPI(slug);
+    dispatch({ type: "GET_SINGLE_COLLECTION", data: data?.result });
+    return { success: true, message: data?.message };
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: err?.response?.data?.message };
+  }
+};
+
 export const updateCollectionAction =
   (id, updatedCollection) => async (dispatch) => {
     try {

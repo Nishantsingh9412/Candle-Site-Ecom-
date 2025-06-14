@@ -5,7 +5,6 @@ import generateSlug from "../utils/slug.js";
 
 export const createCollection = async (req, res) => {
   const { title, description, image, products } = req.body;
-
   try {
     if (!title || !description || !image || !products) {
       return res.status(400).json({
@@ -155,12 +154,7 @@ export const getCollectionById = async (req, res) => {
 
 export const updateCollection = async (req, res) => {
   const { id: _id } = req.params;
-  const { 
-    title,
-    description,
-    image,
-    products
-  } = req.body;
+  const { title, description, image, products } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(400).json({

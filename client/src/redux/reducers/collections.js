@@ -15,6 +15,11 @@ const collectionsReducer = (state = initialState, action) => {
         ...state,
         collections: action.data,
       };
+    case "GET_COLLECTION_BY_SLUG":
+      return {
+        ...state,
+        selectedCollection: action.data,
+      };
     case "GET_SINGLE_COLLECTION":
       return {
         ...state,

@@ -134,7 +134,7 @@ const GetInTouch = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-blue-700 hover:to-cyan-700 hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center"
+                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 hover:from-blue-700 hover:to-cyan-700 hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center cursor-pointer"
                 >
                   <Send className="mr-2" size={20} />
                   Send Message

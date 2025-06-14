@@ -66,9 +66,12 @@ export const DeleteProductByIdAPI = (id) => API.delete(`/api/v1/products/delete-
 export const CreateCollectionAPI = (newCollection) => API.post('/api/v1/collections/create', newCollection);
 // Get all Collections
 export const GetAllCollectionsAPI = () => API.get('/api/v1/collections/get-all-collections');
+// Get Collection by Slug
+export const GetCollectionBySlugAPI = (slug) => API.get(`/api/v1/collections/get-collection-by-slug/${slug}`);
 // Get Collection by Id
 export const GetCollectionByIdAPI = (id) => API.get(`/api/v1/collections/get-collection-by-id/${id}`);
 // Update Collection by Id
 export const UpdateCollectionByIdAPI = (id, updatedCollection) => API.patch(`/api/v1/collections/update-collection/${id}`, updatedCollection);
 // Delete Collection by Id
 export const DeleteCollectionByIdAPI = (id) => API.delete(`/api/v1/collections/delete-collection/${id}`);
+

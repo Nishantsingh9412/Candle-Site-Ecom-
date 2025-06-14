@@ -2,6 +2,7 @@ import express from "express";
 import {
   createCollection,
   getAllCollections,
+  getCollectionBySlug,
   getCollectionById,
   updateCollection,
   deleteCollection,
@@ -13,6 +14,8 @@ const router = express.Router();
 router.post("/create", createCollection);
 // getting all collections
 router.get("/get-all-collections", getAllCollections);
+// getting collection by slug
+router.get("/get-collection-by-slug/:slug", getCollectionBySlug);
 // getting collection by id
 router.get("/get-collection-by-id/:id", getCollectionById);
 // updating a collection by id
