@@ -13,13 +13,21 @@ import Shop from "./components/shop/index";
 import Collections from "./components/collections";
 import SingleProduct from "./components/singleProduct";
 import SingleCollection from "./components/singleCollection";
+// Polices and Terms of Services Static Pages
+import TermsOfService from "./components/miscellaneous/TermsOfService";
+import PrivacyPolicy from "./components/miscellaneous/PrivacyPolicy";
+import ShippingPolicy from "./components/miscellaneous/ShippingPolicy";
+import ReturnAndRefund from "./components/miscellaneous/ReturnAndRefund";
+
 
 
 // Admin Components Start
+import Home from "./components/admin/Home/index";
 import Category from "./components/admin/Category/index";
 import SubCategory from "./components/admin/SubCategory/index";
 import AdminProducts from "./components/admin/Products/index";
 import CollectionsAdmin from "./components/admin/Collections/index";
+import CommonCategoryPage from "./components/commonCategory/index";
 
 
 // Admin Components End 
@@ -42,6 +50,15 @@ const AllRoutes = () => {
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:slug" element={<SingleProduct />} />
         <Route path="/collection/:slug" element={<SingleCollection />} />
+        {/* Polices and Terms of Services */}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/return-and-refund-policies" element={<ReturnAndRefund />} />
+        <Route path="/shipping-policy" element={<ShippingPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/return-and-refund" element={<ReturnAndRefund />} />
+
+        {/* Dynamic Route */}
+        <Route path="/:common" element={<CommonCategoryPage />} />
       </Route>
 
       {/* Admin Routes */}
@@ -53,11 +70,14 @@ const AllRoutes = () => {
         <Route path="category" element={<><h2>Admin Category</h2></>} />
         <Route path="sub-category" element={<><h2>Admin Sub Category</h2></>} />
         <Route path="products" element={<><h2>Admin Products</h2></>} /> */}
-        <Route path="home" element={<><h2>Admin Home</h2></>} />
+
+
+        <Route path="home" element={<Home />} />
         <Route path="category" element={<Category />} />
         <Route path="sub-category" element={<SubCategory />} /> 
         <Route path="products" element={<AdminProducts />} /> 
         <Route path="collections-admin" element={<CollectionsAdmin />} /> 
+
 
       </Route>
 

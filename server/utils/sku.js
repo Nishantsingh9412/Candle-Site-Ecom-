@@ -9,7 +9,7 @@ const checkIfSKUExists = async (sku) => {
   if (alreadySKUExists) {
     return true;
   }
-
+  
   return false;
 };
 
@@ -27,9 +27,10 @@ const generateUniqueSKU = async (productName) => {
     sku = `${shortName}-${uniqueId}`;
 
     attempts++;
-    if (attempts > 5) throw new Error("Failed to generate unique SKU");
+    if (attempts > 5) {
+      throw new Error("Failed to generate unique SKU");
+    }
   } while (await checkIfSKUExists(sku));
-
   return sku;
 };
 

@@ -12,6 +12,7 @@ import subCategoryRoutes from "./routes/subCategory.js";
 import productRoutes from "./routes/product.js";
 import reviewRoutes from "./routes/review.js"
 import collectionRoutes from "./routes/collection.js";
+// import common
 // import ProductRoutes from "./routes/productRoutes.js";
 // import progressRoute from "./routes/progress.js";
 

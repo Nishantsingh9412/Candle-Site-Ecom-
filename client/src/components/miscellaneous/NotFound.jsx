@@ -5,62 +5,60 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background animated elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-4 h-4 bg-yellow-400 rounded-full opacity-20 animate-ping"></div>
-        <div className="absolute bottom-20 right-10 w-6 h-6 bg-orange-400 rounded-full opacity-20 animate-ping delay-500"></div>
-        <div className="absolute top-1/2 left-20 w-3 h-3 bg-red-400 rounded-full opacity-20 animate-ping delay-1000"></div>
-        <div className="absolute top-32 right-20 w-2 h-2 bg-purple-400 rounded-full opacity-30 animate-pulse delay-700"></div>
-        <div className="absolute bottom-32 left-32 w-5 h-5 bg-pink-400 rounded-full opacity-15 animate-bounce delay-300"></div>
-      </div>
-
-      <div className="max-w-2xl mx-auto text-center relative z-10">
-        {/* Candle SVG Icon */}
-
-        {/* 404 Text with enhanced glow effect */}
-        <div className="mb-6 relative">
-          <div className="relative z-10">
-            <h1 className="text-8xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 filter drop-shadow-2xl">
-              404
-            </h1>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-yellow-50 flex items-center justify-center p-4">
+      <div className="max-w-md mx-auto text-center">
+        {/* Candle and Gift Icon */}
+        <div className="mb-8 flex justify-center space-x-4">
+          {/* Candle */}
+          <div className="relative">
+            <div className="w-6 h-12 bg-gradient-to-b from-orange-200 to-orange-300 rounded-full"></div>
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-yellow-300 rounded-full animate-pulse"></div>
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-2 bg-orange-600"></div>
           </div>
-          <div className="absolute inset-0 z-0">
-            <h1 className="text-8xl md:text-9xl font-bold text-yellow-400 blur-xl opacity-30 animate-pulse">
-              404
-            </h1>
+          
+          {/* Gift Box */}
+          <div className="relative">
+            <div className="w-12 h-10 bg-gradient-to-b from-pink-200 to-pink-300 rounded-sm"></div>
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-2 bg-red-300"></div>
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-10 bg-red-300"></div>
           </div>
         </div>
 
-        {/* Main heading with subtle animation */}
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-wide animate-fade-in">
-          Page Not Found
+        {/* 404 Text */}
+        <h1 className="text-6xl font-bold text-orange-400 mb-4">404</h1>
+
+        {/* Main heading */}
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+          Oops! Page Not Found
         </h2>
 
-        {/* Description with better typography */}
-        <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-md mx-auto">
-          The candle you're looking for seems to have
-          <span className="text-orange-400 font-medium animate-pulse">
-            {" "}
-            burned out
-          </span>
-          . Don't worry, we'll help you find your way back.
+        {/* Description */}
+        <p className="text-gray-600 mb-8 leading-relaxed">
+          It looks like this gift has been unwrapped already! 
+          <br />
+          Let's get you back to our collection.
         </p>
 
-        {/* Enhanced decorative elements */}
-        <div className="flex justify-center space-x-6 mb-8">
-          <div className="w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-bounce delay-100 shadow-lg"></div>
-          <div className="w-3 h-3 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-bounce delay-200 shadow-lg"></div>
-          <div className="w-3 h-3 bg-gradient-to-r from-red-400 to-pink-400 rounded-full animate-bounce delay-300 shadow-lg"></div>
+        {/* Decorative candles */}
+        <div className="flex justify-center space-x-3 mb-8">
+          <div className="w-2 h-6 bg-orange-200 rounded-full relative">
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
+          </div>
+          <div className="w-2 h-8 bg-pink-200 rounded-full relative">
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-ping delay-300"></div>
+          </div>
+          <div className="w-2 h-6 bg-red-200 rounded-full relative">
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-ping delay-500"></div>
+          </div>
         </div>
 
-        {/* Enhanced CTA Button */}
-        <p
+        {/* CTA Button */}
+        <button
           onClick={() => navigate("/")}
-          className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-semibold rounded-full shadow-2xl hover:shadow-orange-500/25 transform hover:scale-105 transition-all duration-300 hover:from-yellow-400 hover:to-orange-400 group border border-orange-400/20 backdrop-blur-sm cursor-pointer"
+          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-300 to-pink-300 text-gray-700 font-medium rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 hover:from-orange-200 hover:to-pink-200 hover:cursor-pointer " 
         >
           <svg
-            className="w-5 h-5 mr-2 group-hover:animate-pulse transition-transform group-hover:-translate-x-1"
+            className="w-4 h-4 mr-2"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -70,12 +68,8 @@ const NotFound = () => {
               clipRule="evenodd"
             />
           </svg>
-          Light your way back home
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-        </p>
-
-        {/* Subtle bottom accent */}
-        <div className="mt-12 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+          Back to Shop
+        </button>
       </div>
     </div>
   );
