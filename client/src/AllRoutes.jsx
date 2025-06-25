@@ -51,7 +51,8 @@ const AllRoutes = () => {
         <Route path="/product/:slug" element={<SingleProduct />} />
         <Route path="/collection/:slug" element={<SingleCollection />} />
         {/* Polices and Terms of Services */}
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route 
+          path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/return-and-refund-policies" element={<ReturnAndRefund />} />
         <Route path="/shipping-policy" element={<ShippingPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
