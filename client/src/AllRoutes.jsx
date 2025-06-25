@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import LandingPage from "./components/landing/LandingPage";
@@ -36,6 +36,10 @@ import CommonCategoryPage from "./components/commonCategory/index";
 import Layout from "./components/layout";
 
 const AllRoutes = () => {
+  const UserProfile = JSON.parse(localStorage.getItem("Profile"));
+  const UserRole = UserProfile?.role || "user"; // Default to 'user' if no role is found
+  console.log("User Role:", UserRole);
+
   return (
     <Routes>
       {/* Standalone Routes (No Layout) */}
@@ -51,8 +55,7 @@ const AllRoutes = () => {
         <Route path="/product/:slug" element={<SingleProduct />} />
         <Route path="/collection/:slug" element={<SingleCollection />} />
         {/* Polices and Terms of Services */}
-        <Route 
-          path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/return-and-refund-policies" element={<ReturnAndRefund />} />
         <Route path="/shipping-policy" element={<ShippingPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -65,22 +68,21 @@ const AllRoutes = () => {
       {/* Admin Routes */}
 
       {/* <Route path="/admin" element={<Dashboard />} /> */}
-
+     { UserRole === 'admin' ? (
       <Route path="/admin" element={<Dashboard />}>
         {/* <Route path="home" element={<><h2>Admin Home</h2></>} />
         <Route path="category" element={<><h2>Admin Category</h2></>} />
         <Route path="sub-category" element={<><h2>Admin Sub Category</h2></>} />
         <Route path="products" element={<><h2>Admin Products</h2></>} /> */}
-
-
         <Route path="home" element={<Home />} />
         <Route path="category" element={<Category />} />
         <Route path="sub-category" element={<SubCategory />} /> 
         <Route path="products" element={<AdminProducts />} /> 
         <Route path="collections-admin" element={<CollectionsAdmin />} /> 
-
-
       </Route>
+        ) : (
+        <Route path="/admin/login" element={<Login />} />
+      )}
 
       {/* Catch-All */}
       <Route path="*" element={<NotFound />} />

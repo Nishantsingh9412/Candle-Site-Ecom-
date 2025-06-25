@@ -5,6 +5,7 @@ const authSchema = new mongoose.Schema({
     lname: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String },
+    role: { type: String, default: "user" },
 }, { timestamps: true });
 
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = axios.create({ baseURL: import.meta.env.VITE_API_URL })
+const API = axios.create({ baseURL: import.meta.env.VITE_API_URL  })
 
 // For authentication purpose  
 
@@ -19,6 +19,9 @@ export const SignupAPI = (newUser) => API.post('/api/v1/auth/signup', newUser)
 export const LoginAPI = (logindata) => API.post('/api/v1/auth/login', logindata)
 
 export const sendOTPAPI = (email) => API.post('/api/v1/otp/send-otp', email)
+
+export const validateOTPAPI = (validateOTPData) =>
+  API.post("/api/v1/otp/validate-otp", validateOTPData);
 
 // Category API's 
 // Create new 

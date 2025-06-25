@@ -8,7 +8,6 @@ import {
   // googleAuthAction,
   loginAction,
 } from "../../../redux/action/auth";
-import signInImage from "../../../assets/img/sign_in_first.gif";
 
 const SignIn = () => {
   const APIURL = import.meta.env.VITE_API_URL;
@@ -51,6 +50,7 @@ const SignIn = () => {
     dispatch(loginAction(loginData))
       .then((res) => {
         if (res.success) {
+          console.log("Signin response: ", res);
           navigate("/admin");
         } else {
           toast.error(res?.message);
@@ -61,100 +61,82 @@ const SignIn = () => {
       });
   };
 
-  // fetch('/path_to_googleAuthController', {
-  //     method: 'GET', // or 'POST'
-  //     // Additional fetch options...
-  // }).then(response => response.json())
-  //     .then(data => {
-  //         if (data.redirectUrl) {
-  //             window.location.href = data.redirectUrl; // Perform the redirection
-  //         }
-  //     }).catch(error => console.error('Error:', error));
-
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
       <Toaster />
-      <div className="md:w-2/5 w-full p-8 flex flex-col justify-center">
-        <div className="max-w-md mx-auto w-full bg-white shadow-2xl rounded-lg p-6">
-          <h2 className="text-3xl font-bold mb-6 text-center text-themeRed">
-            Sign in
-          </h2>
-          {/* <button
-                        onClick={googleAuth}
-                        className="w-full py-4 mb-6 border border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
-                        <FcGoogle size={'1.5em'} className='mr-2' />
-                        Sign in with Google
-                    </button> */}
-          {/* <div className="flex items-center justify-center mb-4">
-                        <div className="flex-grow border-t border-gray-300"></div>
-                        <span className="mx-4 text-gray-600">or sign in with email</span>
-                        <div className="flex-grow border-t border-gray-300"></div>
-                    </div> */}
-          <form onSubmit={handleLoginSubmit}>
-            <label className="font-semibold text-lg">Username or Email</label>
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden p-8">
+        <div className="text-center mb-8">
+          {/* <h2 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
+            Welcome Back
+          </h2> */}
+          <p className="text-gray-600">Sign in to your account</p>
+        </div>
+
+        <form onSubmit={handleLoginSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Username or Email
+            </label>
             <input
               type="text"
-              className="w-full mt-2 p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-themeRed"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+              placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
-            <label className="font-semibold text-lg">Password</label>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Password
+            </label>
             <input
               type="password"
-              className="w-full mt-2 p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-themeRed"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+              placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
-            <div className="text-right mb-4">
-              <a href="#" className="text-themeRed font-medium hover:underline">
-                Forgot?
-              </a>
-            </div>
-            {/* {alertMessage && showAlert && (
-                            <Alert
-                                message={alertMessage}
-                                onClose={handleCloseAlert}
-                                type={alertType}
-                            />
-                        )} */}
-            <button
-              className="w-full py-5 mb-4 bg-themeRed text-white rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-700 hover:bg-themeRed transition-all duration-300 hover:rounded-full"
-              type="submit"
-            >
-              Sign In
-            </button>
+          </div>
 
-            <button
-              className="w-full py-5 mb-4 bg-themeRed  hover:cursor-pointer text-white rounded-lg focus:outline-none focus:ring-4 focus:ring-pink-700 hover:bg-themeRed transition-all duration-300 hover:rounded-full"
-              type="submit"
-              onClick={() => {
-                setEmail("nishu2020ns@gmail.com");
-                setPassword("123456");
-              }}
-            >
-              Test User
-            </button>
-            <div className="text-center">
-              <span className="text-gray-600">
-                Don't have an account?
-                <a
-                  href="/signup"
-                  className="text-themeRed ml-2 font-medium hover:underline"
-                >
-                  Sign Up
-                </a>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div
-        className="hidden md:flex md:w-3/5 w-full items-center justify-center bg-cover bg-center"
-        // style={{ backgroundImage: `url(${pana2})` }}
-      >
-        <img
-          alt="sign-in image"
-          src={signInImage}
-          className="object-cover w-4/5 h-full rounded-r-lg"
-        />
+          <div className="text-right">
+            <a href="#" className="text-amber-600 hover:text-amber-800 font-medium text-sm hover:underline transition-colors duration-200">
+              Forgot Password?
+            </a>
+          </div>
+
+          <button
+            className="w-full py-3 sm:py-4 mt-3 sm:mt-4 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-2xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
+            type="submit"
+          >
+            Sign In
+          </button>
+
+          {/*
+          <button
+            className="w-full py-1 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
+            type="button"
+            onClick={() => {
+              setEmail("nishu2020ns@gmail.com");
+              setPassword("123456");
+            }}
+          >
+            Use Test Account
+          </button> 
+          */}
+
+          <div className="text-center pt-4">
+            <span className="text-gray-600">
+              Don't have an account?{" "}
+              <a
+                href="/signup"
+                className="text-amber-600 hover:text-amber-800 font-semibold hover:underline transition-colors duration-200"
+              >
+                Sign Up
+              </a>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   );
