@@ -8,6 +8,7 @@ import NotFound from "./components/miscellaneous/NotFound";
 
 import Dashboard from "./components/admin/Dashboard/Dashboard";
 import Contact from "./components/contact/index";
+import Account from "./components/account";
 import AboutUs from "./components/AboutUs";
 import Shop from "./components/shop/index";
 import Collections from "./components/collections";
@@ -54,6 +55,8 @@ const AllRoutes = () => {
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:slug" element={<SingleProduct />} />
         <Route path="/collection/:slug" element={<SingleCollection />} />
+        <Route path="/account/:userId" element={<Account />} />
+
         {/* Polices and Terms of Services */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/return-and-refund-policies" element={<ReturnAndRefund />} />

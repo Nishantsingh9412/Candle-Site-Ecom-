@@ -9,14 +9,21 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const localUser = JSON.parse(localStorage.getItem("Profile"));
+  // console.log("Local User ---------------------------- : ", localUser);
+  // const userId = localUser?._id;
+  // console.log("User ID ---------------------------- : ", userId);
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localUser ? true : false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const categories = useSelector((state) => state.category);
-  console.log(categories);
+  // console.log(categories);
   // Dynamic navigation items based on categories
 
   const subCategories = useSelector((state) => state.subCategory);
-  console.log(subCategories);
+  // console.log(subCategories);
 
   const DynamicNavItems = categories?.categories?.map((category) => ({
     name: category.CategoryName.toUpperCase(),
@@ -37,13 +44,18 @@ const Header = () => {
   const navItems = [
     { name: "ABOUT US", path: "/about-us" },
     ...DynamicNavItems,
-    // { name: 'SHOP', path: '/shop' },
-    // { name: 'COLLECTIONS', path: '/collections' },
-    // { name: "SALE", path: "/sale" },
-    // { name: "BESPOKE", path: "/bespoke" },
-    // { name: "STOCKISTS", path: "/stockists" },
     { name: "CONTACT US", path: "/contact-us" },
   ];
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+    setIsLoggedIn(false);
+    setIsDropdownOpen(false);
+
+
+    // Removing Cart Data (Future Scope)
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -67,7 +79,7 @@ const Header = () => {
                 onClick={() => setIsSearchOpen(false)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                ✕
+                X
               </button>
             </div>
           </div>
@@ -91,12 +103,50 @@ const Header = () => {
                 >
                   <Search size={20} />
                 </button>
-
-                {/* User Icon */}
-                <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                  <User size={20} />
-                </button>
-
+                {/* User Profile Dropdown */}
+                <div className="relative">
+                  <button
+                    className="p-2 text-gray-600 hover:text-gray-900 transition-colors hover:cursor-pointer"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <User size={20} />
+                  </button>
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                      <div className="py-1">
+                        {isLoggedIn ? (
+                          <>
+                            <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                              Profile
+                            </button>
+                            <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                              Orders
+                            </button>
+                            <button
+                              onClick={handleLogout}
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            >
+                              Logout
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button 
+                              onClick={() => navigate("/login")}  
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                              Sign In
+                            </button>
+                            <button 
+                              onClick={() => navigate("/signup")}
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                              Create New Account
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 {/* Shopping Bag with Badge */}
                 <button className="relative p-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <ShoppingBag size={20} />

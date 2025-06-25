@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 // Route to create a new category
-router.post("/create", createCategory);
+router.post("/create",  createCategory);
 // Route to get a category by ID
 router.get("/get-single-category/:id", getCategoryById);
 // Route to get all categories

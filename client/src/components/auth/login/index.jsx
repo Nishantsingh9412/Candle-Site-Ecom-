@@ -50,8 +50,12 @@ const SignIn = () => {
     dispatch(loginAction(loginData))
       .then((res) => {
         if (res.success) {
-          console.log("Signin response: ", res);
-          navigate("/admin");
+          const userRole = res.result.role;
+          if (userRole === "admin") {
+            navigate("/admin/home");
+          } else {
+            navigate(`/account/${res?.result?._id}`);
+          }
         } else {
           toast.error(res?.message);
         }
@@ -66,20 +70,20 @@ const SignIn = () => {
       <Toaster />
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden p-8">
         <div className="text-center mb-8">
-          {/* <h2 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
             Welcome Back
-          </h2> */}
-          <p className="text-gray-600">Sign in to your account</p>
+          </h2>
+          <p className="text-gray-600 text-sm">Sign in to your account</p>
         </div>
 
-        <form onSubmit={handleLoginSubmit} className="space-y-6">
+        <form onSubmit={handleLoginSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Username or Email
             </label>
             <input
               type="text"
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+              className="w-full px-3 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
               placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -87,12 +91,12 @@ const SignIn = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+              className="w-full px-3 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
@@ -100,30 +104,30 @@ const SignIn = () => {
           </div>
 
           <div className="text-right">
-            <a href="#" className="text-amber-600 hover:text-amber-800 font-medium text-sm hover:underline transition-colors duration-200">
+            <a
+              href="#"
+              className="text-amber-600 hover:text-amber-800 font-medium text-sm hover:underline transition-colors duration-200"
+            >
               Forgot Password?
             </a>
           </div>
 
           <button
-            className="w-full py-3 sm:py-4 mt-3 sm:mt-4 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-2xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
+            className="w-full py-3 mt-3 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
             type="submit"
           >
             Sign In
           </button>
 
-          {/*
           <button
-            className="w-full py-1 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
-            type="button"
             onClick={() => {
               setEmail("nishu2020ns@gmail.com");
               setPassword("123456");
             }}
+            className="w-full py-2 mt-2 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
           >
-            Use Test Account
-          </button> 
-          */}
+            Admin
+          </button>
 
           <div className="text-center pt-4">
             <span className="text-gray-600">

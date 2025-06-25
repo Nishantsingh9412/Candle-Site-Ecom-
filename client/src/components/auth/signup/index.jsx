@@ -24,6 +24,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showOTPLabel, setShowOTPLabel] = useState(false);
+  const [showOTPButton, setShowOTPBButton] = useState(true);
   // const [alertType, setAlertType] = useState('failure');
   const [otpbuttonLoading, setOTPButtonLoading] = useState(false);
   const [OTP, setOTP] = useState("");
@@ -48,9 +49,13 @@ const SignUp = () => {
     }
     if (value.length === 6) {
         validateOTPAPI(OTPdata).then((res) => {
+          // OTP is valid
+            setShowOTPLabel(false);
+            setShowOTPBButton(false);
             toast.success(res?.data?.message);
         }).catch((err) => {
-            toast.error(err?.response?.data?.message);7           
+          // OTP is invalid
+            toast.error(err?.response?.data?.message);          
         })
     }
   };
@@ -163,12 +168,10 @@ const SignUp = () => {
     dispatch(signUpAction(signUpData))
       .then((res) => {
         if (res?.success) {
-          console.log("SignUp response: ", res);
-          navigate("/admin");
+          navigate(`/account/${res?.result}`);         // Id is coming from the response
         } else {
           toast.error(res?.message);
         }
-        console.log(res);
       })
       .catch((err) => {
         console.log("Catch block response : ", err?.message);
@@ -230,6 +233,8 @@ const SignUp = () => {
                 className="w-full p-2 sm:p-3 pr-16 sm:pr-20 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all duration-200 bg-white/70 text-sm sm:text-base"
                 onChange={(e) => setEmail(e.target.value)}
               />
+              
+              {showOTPButton && (
               <button
                 type="button"
                 className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-medium px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl hover:from-amber-600 hover:to-orange-600 cursor-pointer transition-all duration-200 disabled:opacity-50"
@@ -248,6 +253,9 @@ const SignUp = () => {
                   />
                 )}
               </button>
+              )}
+            
+            
             </div>
           </div>
 
@@ -323,7 +331,6 @@ const SignUp = () => {
               />
             )}
           </button>
-            {/* 
           <button
             type="button"
             className="w-full py-3 sm:py-4 mt-3 sm:mt-4 bg-gradient-to-r from-gray-300 to-gray-400 text-gray-800 font-semibold rounded-2xl hover:from-gray-400 hover:to-gray-500 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer"
@@ -331,8 +338,6 @@ const SignUp = () => {
             >
                 Auto add           
           </button>
-           */}
-
           <div className="text-center">
             <span className="text-gray-600 text-xs sm:text-sm">
               Already have an account?
