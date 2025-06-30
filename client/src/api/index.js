@@ -4,12 +4,18 @@ const API = axios.create({ baseURL: import.meta.env.VITE_API_URL  })
 
 // For authentication purpose  
 
-// API.interceptors.request.use((req) => {
-//     if (localStorage.getItem('Profile')) {
-//         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('Profile')).token}`;
-//     }    
-//     return req;
-// });
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('Profile')) {
+    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('Profile')).token}`;
+    console.log('Sending request with authorization token');
+  }    
+  return req;
+});
+
+
+
+
+// console.log('API Interceptor Configured');
 
 // End For Authentication Purpose
 

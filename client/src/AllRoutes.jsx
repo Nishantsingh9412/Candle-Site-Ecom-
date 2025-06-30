@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import LandingPage from "./components/landing/LandingPage";
@@ -35,11 +35,31 @@ import CommonCategoryPage from "./components/commonCategory/index";
 
 
 import Layout from "./components/layout";
+import { useSelector } from "react-redux";
 
-const AllRoutes = () => {
-  const UserProfile = JSON.parse(localStorage.getItem("Profile"));
-  const UserRole = UserProfile?.role || "user"; // Default to 'user' if no role is found
-  console.log("User Role:", UserRole);
+const AllRoutes = () => { 
+  const UserRole = useSelector((state) => state.auth?.data?.role) || 'user' ;
+  const UserAuthData = useSelector((state) => state.auth);  
+
+  const allStates = useSelector((state) => state);
+  console.log(allStates);
+
+  console.log('User Auth Data:', UserAuthData);
+  console.log('User Role:', UserRole);
+  // const [UserRole, setUserRole] = useState('user');
+  // const userProfile = JSON.parse(localStorage.getItem("Profile"));
+  // const UserProfile = JSON.parse(localStorage.getItem("Profile"));
+  // const UserRole = UserProfile?.role // Default to 'user' if no role is found
+  // console.log("User Role:", UserRole);
+
+  // useEffect(() => {
+  //   // Update UserRole whenever UserProfile changes
+  //   if (userProfile && userProfile.role) {
+  //     setUserRole(userProfile.role);
+  //   } else {
+  //     setUserRole('user');  // Default to 'user' if no role is found
+  //   }
+  // }, [userProfile]);
 
   return (
     <Routes>
@@ -70,24 +90,15 @@ const AllRoutes = () => {
 
       {/* Admin Routes */}
 
-      {/* <Route path="/admin" element={<Dashboard />} /> */}
-     { UserRole === 'admin' ? (
-      <Route path="/admin" element={<Dashboard />}>
-        {/* <Route path="home" element={<><h2>Admin Home</h2></>} />
-        <Route path="category" element={<><h2>Admin Category</h2></>} />
-        <Route path="sub-category" element={<><h2>Admin Sub Category</h2></>} />
-        <Route path="products" element={<><h2>Admin Products</h2></>} /> */}
-        <Route path="home" element={<Home />} />
-        <Route path="category" element={<Category />} />
-        <Route path="sub-category" element={<SubCategory />} /> 
-        <Route path="products" element={<AdminProducts />} /> 
-        <Route path="collections-admin" element={<CollectionsAdmin />} /> 
-      </Route>
-        ) : (
-        <Route path="/admin/login" element={<Login />} />
+      {UserRole === 'admin' && (
+        <Route path="/admin" element={<Dashboard />}>
+          <Route path="home" element={<Home />} />
+          <Route path="category" element={<Category />} />
+          <Route path="sub-category" element={<SubCategory />} /> 
+          <Route path="products" element={<AdminProducts />} /> 
+          <Route path="collections-admin" element={<CollectionsAdmin />} /> 
+        </Route>
       )}
-
-      {/* Catch-All */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

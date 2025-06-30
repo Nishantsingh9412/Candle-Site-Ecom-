@@ -29,13 +29,13 @@ app.use(cors(corsOptions));
 // app.use('/api/v1/progress',progressRoute);
 // --------------------------- authRoutes and otpRoutes ---------------------------
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/otp', otpRoutes)
+app.use('/api/v1/otp', otpRoutes);
 
-// -------------------------- shopping cart and wishlist routes ---------------------------
+// -------------------------- Products Routes ---------------------------
 app.use('/api/v1/category',CategoryRoutes);
 app.use('/api/v1/sub-category', subCategoryRoutes);
-app.use('/api/v1/review', reviewRoutes)
-app.use('/api/v1/products',productRoutes)
+app.use('/api/v1/review', reviewRoutes);
+app.use('/api/v1/products',productRoutes);
 app.use('/api/v1/collections', collectionRoutes);
 // app.use('/api/v1/wishlist', WishlistRoutes); 
 // app.use('/api/v1/product', ProductRoutes);  

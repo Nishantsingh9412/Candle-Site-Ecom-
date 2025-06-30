@@ -14,7 +14,6 @@ export const createCategoryAction = (newCategory) => async (dispatch) => {
 export const GetAllCategoriesAction = () => async (dispatch) => {
   try {
     const { data } = await api.GetAllCategoriesAPI();
-    console.log(" data from GetAllCategoriesAction", data);
     dispatch({ type: "GET_ALL_CATEGORIES", data: data?.result });
     return { success: true, message: data?.message };
   } catch (err) {

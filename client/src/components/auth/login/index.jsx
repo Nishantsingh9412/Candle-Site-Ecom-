@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   // googleAuthAction,
@@ -13,8 +14,10 @@ const SignIn = () => {
   const APIURL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [btnLoading, setBtnLoading] = useState(false);
 
   // const googleAuth = () => {
   //     window.open(
@@ -38,10 +41,11 @@ const SignIn = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-
     if (!validate()) {
       return;
     }
+    setBtnLoading(true);
+
     const loginData = {
       email: email,
       password: password,
@@ -62,6 +66,9 @@ const SignIn = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setBtnLoading(false);
       });
   };
 
@@ -115,8 +122,19 @@ const SignIn = () => {
           <button
             className="w-full py-3 mt-3 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
             type="submit"
+            disabled={btnLoading}
           >
-            Sign In
+            {!btnLoading ? (
+              "Sign In"
+            ) : (
+              <ClipLoader
+                color={"#FFFFFF"}
+                loading={btnLoading}
+                size={14}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            )}
           </button>
 
           <button
@@ -126,7 +144,17 @@ const SignIn = () => {
             }}
             className="w-full py-2 mt-2 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white font-semibold rounded-xl hover:from-amber-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-200 disabled:opacity-50 hover:cursor-pointer transform hover:scale-[1.02] shadow-lg"
           >
-            Admin
+            {!btnLoading ? (
+              "Admin Login (Demo)"
+            ) : (
+              <ClipLoader
+                color={"#FFFFFF"}
+                loading={btnLoading}
+                size={14}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            )}
           </button>
 
           <div className="text-center pt-4">

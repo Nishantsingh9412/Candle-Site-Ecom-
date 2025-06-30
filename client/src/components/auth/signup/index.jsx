@@ -254,8 +254,6 @@ const SignUp = () => {
                 )}
               </button>
               )}
-            
-            
             </div>
           </div>
 

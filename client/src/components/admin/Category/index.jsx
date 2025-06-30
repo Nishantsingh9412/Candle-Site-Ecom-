@@ -23,12 +23,13 @@ const index = () => {
   const [ShowEditModal, setShowEditModal] = useState(false);
   const [EditCategoryData, setEditCategoryData] = useState({});
 
+  const UserToken = JSON.parse(localStorage.getItem("Profile"))?.token;
+  console.log("Token: ----------------------------> ", UserToken);
+
   // Get categories from Redux store
   const { categories } = useSelector(
     (state) => state.category || { categories: [] }
   );
-
-  console.log(categories);
 
   useEffect(() => {
     // Fetch categories when component mounts
@@ -102,7 +103,7 @@ const index = () => {
             onClick={() => setShowModal(true)}
             className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center cursor-pointer"
           >
-            <Plus className="mr-2" /> 
+            <Plus className="mr-2" />
             Add Category
           </button>
         </div>

@@ -3,7 +3,7 @@ import * as api from "../../api/index.js";
 export const signUpAction = (newUser) => async (dispatch) => {
   try {
     const { data } = await api.SignupAPI(newUser);
-    dispatch({ type: "AUTH", data: data?.result });
+    dispatch({ type: "AUTH", data: data?.result, token: data?.token });
     return {
       success: true,
       message: data?.message,
@@ -18,11 +18,11 @@ export const signUpAction = (newUser) => async (dispatch) => {
 export const loginAction = (logindata) => async (dispatch) => {
   try {
     const { data } = await api.LoginAPI(logindata);
-    dispatch({ type: "AUTH", data: data?.result });
+    dispatch({ type: "AUTH", data: data?.result, token: data?.token });
     return {
       success: true,
       message: "User logged in successfully",
-      result:data?.result,
+      result: data?.result,
     };
   } catch (err) {
     console.log(err);
