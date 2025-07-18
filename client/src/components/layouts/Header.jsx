@@ -154,7 +154,7 @@ const Header = () => {
                   )}
                 </div>
                 {/* Shopping Bag with Badge */}
-                <CartIcon className="text-gray-600 hover:text-gray-900 transition-colors" size={20} />
+                <CartIcon className="text-gray-600 hover:text-gray-900 transition-colors" size={6} />
               </div>
             </div>
 
