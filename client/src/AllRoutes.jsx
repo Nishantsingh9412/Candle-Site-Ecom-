@@ -16,6 +16,7 @@ import Shop from "./components/shop/index";
 import Collections from "./components/collections";
 import SingleProduct from "./components/singleProduct";
 import SingleCollection from "./components/singleCollection";
+import Checkout from "./components/checkout/Checkout";
 // Polices and Terms of Services Static Pages
 import TermsOfService from "./components/miscellaneous/TermsOfService";
 import PrivacyPolicy from "./components/miscellaneous/PrivacyPolicy";
@@ -42,8 +43,8 @@ const AllRoutes = () => {
   const UserRole = useSelector((state) => state.auth?.data?.role) || 'user' ;
   const UserAuthData = useSelector((state) => state.auth);  
 
-  const allStates = useSelector((state) => state);
-  console.log(allStates);
+  // const allStates = useSelector((state) => state);
+  // console.log(allStates);
 
   console.log('User Auth Data:', UserAuthData);
   console.log('User Role:', UserRole);
@@ -77,6 +78,7 @@ const AllRoutes = () => {
         <Route path="/product/:slug" element={<SingleProduct />} />
         <Route path="/collection/:slug" element={<SingleCollection />} />
         <Route path="/account/:userId" element={<Account />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         {/* Polices and Terms of Services */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

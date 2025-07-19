@@ -13,6 +13,7 @@ import productRoutes from "./routes/product.js";
 import reviewRoutes from "./routes/review.js"
 import collectionRoutes from "./routes/collection.js";
 import cartRoutes from "./routes/cart.js";
+import paymentRoutes from "./routes/payment.js";
 // import common
 // import ProductRoutes from "./routes/productRoutes.js";
 // import progressRoute from "./routes/progress.js";
@@ -39,6 +40,7 @@ app.use('/api/v1/review', reviewRoutes);
 app.use('/api/v1/products',productRoutes);
 app.use('/api/v1/collections', collectionRoutes);
 app.use('/api/v1/cart', cartRoutes);
+app.use('/api/v1/payment', paymentRoutes);
 // app.use('/api/v1/wishlist', WishlistRoutes); 
 // app.use('/api/v1/product', ProductRoutes);  
 

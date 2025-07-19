@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Search, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { GetAllCategoriesAction } from "../../redux/action/category";
 import { GetAllSubCategoriesAction } from "../../redux/action/subCategory";
 import CartIcon from "../cart/CartIcon";
@@ -23,6 +24,7 @@ const Header = () => {
 
   const categories = useSelector((state) => state.category);
   const { user } = useSelector((state) => state.auth);
+  console.log("User from Redux:", user);
   // console.log(categories);
   // Dynamic navigation items based on categories
 
@@ -43,7 +45,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(GetAllCategoriesAction());
     dispatch(GetAllSubCategoriesAction());
-    
+
     // Get cart data if user is logged in
     if (user) {
       dispatch(getCart());
@@ -122,7 +124,10 @@ const Header = () => {
                       <div className="py-1">
                         {isLoggedIn ? (
                           <>
-                            <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                            <button
+                              onClick={() => navigate(`/account/${user?._id}`)}
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            >
                               Profile
                             </button>
                             <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
@@ -137,14 +142,16 @@ const Header = () => {
                           </>
                         ) : (
                           <>
-                            <button 
-                              onClick={() => navigate("/login")}  
-                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                            <button
+                              onClick={() => navigate("/login")}
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            >
                               Sign In
                             </button>
-                            <button 
+                            <button
                               onClick={() => navigate("/signup")}
-                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            >
                               Create New Account
                             </button>
                           </>
@@ -154,7 +161,10 @@ const Header = () => {
                   )}
                 </div>
                 {/* Shopping Bag with Badge */}
-                <CartIcon className="text-gray-600 hover:text-gray-900 transition-colors" size={6} />
+                <CartIcon
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  size={6}
+                />
               </div>
             </div>
 

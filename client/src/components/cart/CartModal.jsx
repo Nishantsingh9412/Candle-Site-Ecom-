@@ -66,8 +66,9 @@ const CartModal = () => {
       return;
     }
     // Navigate to checkout
-    console.log("Proceeding to checkout...");
-    // You can add navigation logic here
+    dispatch(closeCartModal());
+    // navigate("/checkout");
+    window.location.href = "/checkout";
   };
 
   if (!isCartModalOpen) return null;

@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   User,
   ShoppingBag,
   Heart,
   MapPin,
   CreditCard,
-  Settings
+  Settings,
 } from "lucide-react";
 
 const Account = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("profile");
 
   // const user = {
@@ -25,20 +27,50 @@ const Account = () => {
     return joinedDate.toLocaleDateString(undefined, options);
   };
 
-  const orders = [
-    {
-      id: "#12345",
-      date: "2023-05-15",
-      status: "Delivered",
-      total: "$45.99",
-    },
-    {
-      id: "#12346",
-      date: "2023-06-20",
-      status: "Processing",
-      total: "$32.50",
-    },
-  ];
+  const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+
+  // Handle URL query parameters for tab selection
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabFromUrl = searchParams.get("tab");
+    if (tabFromUrl) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (activeTab === "orders") {
+      fetchOrders();
+    }
+  }, [activeTab]);
+
+  const fetchOrders = async () => {
+    setLoadingOrders(true);
+    try {
+      const localStorageTempToken =
+        user?.token || localStorage.getItem("Profile")?.token;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/payment/orders`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorageTempToken}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.success) {
+        setOrders(data.orders);
+      }
+
+      console.log("Orders fetched successfully:", data.orders); 
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -85,60 +117,128 @@ const Account = () => {
         return (
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Order History</h2>
-            {orders.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Order ID
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Date
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Total
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {orders.map((order) => (
-                      <tr key={order.id}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {order.id}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {order.date}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              order.status === "Delivered"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-yellow-100 text-yellow-800"
-                            }`}
+            {loadingOrders ? (
+              <p className="text-gray-500">Loading orders...</p>
+            ) : orders.length > 0 ? (
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <div
+                    key={order._id}
+                    className="border border-gray-200 rounded-lg p-4"
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-semibold text-lg">
+                          Order #{order._id.slice(-8)}
+                        </h3>
+                        <p className="text-gray-600 text-sm">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            order.orderStatus === "Delivered"
+                              ? "bg-green-100 text-green-800"
+                              : order.orderStatus === "Processing"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : order.orderStatus === "Shipped"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {order.orderStatus}
+                        </span>
+                        <p className="font-bold text-lg mt-1">
+                          ₹{order.totalPrice}
+                            {/* ₹{order.totalPrice.toFixed(2)} */}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      <h4 className="font-medium mb-2">Items:</h4>
+                      <div className="space-y-2">
+                        {order.orderItems.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center space-x-3"
                           >
-                            {order.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {order.total}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button className="text-indigo-600 hover:text-indigo-900">
-                            View
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <img
+                              // src={item.productImage || "/placeholder.jpg"}
+                              src={item?.productImage ? `${import.meta.env.VITE_API_URL}/uploads/${item?.productImage}` : "https://placehold.co/64X64?text=No+Image"}
+                              // src={
+                              //   item?.product?.images?.[0]
+                              //     ? `${import.meta.env.VITE_API_URL}/uploads/${
+                              //         item?.product?.images[0]
+                              //       }`
+                              //     : "https://placehold.co/64X64?text=No+Image"
+                              // }
+                              alt={item?.productName}
+                              className="w-12 h-12 object-cover rounded"
+                            />
+                            <div className="flex-1">
+                              <p className="font-medium">{item.productName}</p>
+                              <p className="text-gray-600 text-sm">
+                                Qty: {item.quantity} × ₹{item.price}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      <h4 className="font-medium mb-1">Shipping Address:</h4>
+                      <p className="text-gray-600 text-sm">
+                        {order.shippingAddress.fullName}
+                        <br />
+                        {order.shippingAddress.address}
+                        <br />
+                        {order.shippingAddress.city},{" "}
+                        {order.shippingAddress.state} -{" "}
+                        {order.shippingAddress.pincode}
+                        <br />
+                        Phone: {order.shippingAddress.phone}
+                      </p>
+                    </div>
+
+                    {order.paymentInfo && (
+                      <div className="mb-3">
+                        <h4 className="font-medium mb-1">Payment Status:</h4>
+                        <span
+                          className={`px-2 py-1 rounded text-xs font-medium ${
+                            order.paymentInfo.status === "paid"
+                              ? "bg-green-100 text-green-800"
+                              : order.paymentInfo.status === "failed"
+                              ? "bg-red-100 text-red-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}
+                        >
+                          {order.paymentInfo.status === "paid"
+                            ? "Paid"
+                            : order.paymentInfo.status === "failed"
+                            ? "Failed"
+                            : "Pending"}
+                        </span>
+                        {order.paymentInfo.paidAt && (
+                          <p className="text-gray-600 text-sm mt-1">
+                            Paid on:{" "}
+                            {new Date(
+                              order.paymentInfo.paidAt
+                            ).toLocaleDateString()}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Items: ₹{order.itemsPrice}</span>
+                      <span>Tax: ₹{order.taxPrice}</span>
+                      <span>Shipping: ₹{order.shippingPrice}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : (
               <p className="text-gray-500">
