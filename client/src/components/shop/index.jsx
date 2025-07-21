@@ -242,7 +242,7 @@ const Shop = () => {
                               </div>
                             )}
                           {/* Sold Out Overlay */}
-                          {product.soldOut && (
+                          {(product.soldOut || product.availability === 'out_of_stock') && (
                             <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center">
                               <span className="text-stone-500 font-medium text-lg">
                                 Sold Out
@@ -250,7 +250,7 @@ const Shop = () => {
                             </div>
                           )}
                           {/* Add to Cart Button */}
-                          {!product.soldOut &&
+                          {!product.soldOut && product.availability !== 'out_of_stock' &&
                             hoveredProduct === (product._id || product.id) && (
                               <div className="absolute inset-x-0 bottom-0 p-4">
                                 <button
@@ -269,6 +269,12 @@ const Shop = () => {
                           <h3 className="text-stone-800 font-medium mb-2 group-hover:text-stone-600 transition-colors">
                             {product.name}
                           </h3>
+                          {/* Brand */}
+                          {product.brand && (
+                            <p className="text-stone-500 text-xs mb-1">
+                              {product.brand}
+                            </p>
+                          )}
                           {/* Price */}
                           <div className="flex items-center gap-2 mb-3">
                             {product.comparePrice &&
@@ -287,6 +293,18 @@ const Shop = () => {
                               </span>
                             )}
                           </div>
+                          {/* Availability */}
+                          {product.availability && product.availability !== 'in_stock' && (
+                            <div className="mb-2">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                product.availability === 'out_of_stock'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-yellow-100 text-yellow-800'
+                              }`}>
+                                {product.availability.replace('_', ' ').toUpperCase()}
+                              </span>
+                            </div>
+                          )}
                           {/* Reviews */}
                           {product.rating && (
                             <div className="flex items-center gap-2">

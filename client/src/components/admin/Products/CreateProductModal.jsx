@@ -6,15 +6,30 @@ import { createProductAction } from "../../../redux/action/product";
 
 const TEST_PRODUCT = {
   name: "Test Candle",
+  brand: "Scented Gleam",
   price: 299,
   comparePrice: 399,
+  availability: "in_stock",
+  condition: "new",
+  gtin: "1234567890123",
+  mpn: "SCG-001",
+  googleProductCategory: "Home & Garden > Decor > Candles",
+  productType: "Scented Candle",
   description: "A beautiful scented candle for your home.",
   shippingDescription: "Ships in 2-3 business days.",
   instructions: "Light the candle and enjoy the aroma.",
   additionalInfo: "Handmade with love.",
+  additionalImages: "https://placehold.co/480x634?text=Image+2, https://placehold.co/480x634?text=Image+3",
+  color: "White",
+  size: "Medium",
+  material: "Soy Wax",
+  productHighlights: "Long-lasting fragrance, Eco-friendly wax, Hand-poured",
+  shipping_weight: "500g",
+  shipping_length: "10 cm",
+  shipping_width: "10 cm",
+  shipping_height: "12 cm",
   category: "", // Set dynamically
   subCategory: "", // Set dynamically
-  weight: "200g",
   tags: "aroma,relax,home",
   isActive: true,
   isFeatured: false,
@@ -29,16 +44,31 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
+    brand: "Scented Gleam",
     price: "",
     comparePrice: "",
+    availability: "in_stock",
+    condition: "new",
+    gtin: "",
+    mpn: "",
+    googleProductCategory: "",
+    productType: "",
     description: "",
     shippingDescription: "",
     instructions: "",
     additionalInfo: "",
     images: [],
+    additionalImages: "",
+    color: "",
+    size: "",
+    material: "",
+    productHighlights: "",
+    shipping_weight: "",
+    shipping_length: "",
+    shipping_width: "",
+    shipping_height: "",
     category: "",
     subCategory: "",
-    weight: "",
     tags: "",
     isActive: true,
     isFeatured: false,
@@ -80,15 +110,30 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
 
     const submittingData = new FormData();
     submittingData.append("name", formData.name);
+    submittingData.append("brand", formData.brand);
     submittingData.append("price", formData.price);
     submittingData.append("comparePrice", formData.comparePrice);
+    submittingData.append("availability", formData.availability);
+    submittingData.append("condition", formData.condition);
+    submittingData.append("gtin", formData.gtin);
+    submittingData.append("mpn", formData.mpn);
+    submittingData.append("googleProductCategory", formData.googleProductCategory);
+    submittingData.append("productType", formData.productType);
     submittingData.append("description", formData.description);
     submittingData.append("shippingDescription", formData.shippingDescription);
     submittingData.append("instructions", formData.instructions);
     submittingData.append("additionalInfo", formData.additionalInfo);
+    submittingData.append("additionalImages", formData.additionalImages);
+    submittingData.append("color", formData.color);
+    submittingData.append("size", formData.size);
+    submittingData.append("material", formData.material);
+    submittingData.append("productHighlights", formData.productHighlights);
+    submittingData.append("shipping_weight", formData.shipping_weight);
+    submittingData.append("shipping_length", formData.shipping_length);
+    submittingData.append("shipping_width", formData.shipping_width);
+    submittingData.append("shipping_height", formData.shipping_height);
     submittingData.append("category", formData.category);
     submittingData.append("subCategory", formData.subCategory);
-    submittingData.append("weight", formData.weight);
     submittingData.append("isActive", formData.isActive);
     submittingData.append("isFeatured", formData.isFeatured);
     submittingData.append("metaTitle", formData.metaTitle);
@@ -179,6 +224,19 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
+                Brand
+              </label>
+              <input
+                type="text"
+                name="brand"
+                value={formData.brand}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Price
               </label>
               <input
@@ -198,6 +256,121 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
                 type="number"
                 name="comparePrice"
                 value={formData.comparePrice}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Availability
+              </label>
+              <select
+                name="availability"
+                value={formData.availability}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              >
+                <option value="in_stock">In Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+                <option value="preorder">Pre-order</option>
+                <option value="backorder">Back-order</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Condition
+              </label>
+              <select
+                name="condition"
+                value={formData.condition}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              >
+                <option value="new">New</option>
+                <option value="refurbished">Refurbished</option>
+                <option value="used">Used</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                GTIN (UPC/EAN/ISBN)
+              </label>
+              <input
+                type="text"
+                name="gtin"
+                value={formData.gtin}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                MPN (Manufacturer Part Number)
+              </label>
+              <input
+                type="text"
+                name="mpn"
+                value={formData.mpn}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Google Product Category
+              </label>
+              <input
+                type="text"
+                name="googleProductCategory"
+                value={formData.googleProductCategory}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Product Type
+              </label>
+              <input
+                type="text"
+                name="productType"
+                value={formData.productType}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Color
+              </label>
+              <input
+                type="text"
+                name="color"
+                value={formData.color}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Size
+              </label>
+              <input
+                type="text"
+                name="size"
+                value={formData.size}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Material
+              </label>
+              <input
+                type="text"
+                name="material"
+                value={formData.material}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
               />
@@ -297,6 +470,82 @@ const CreateProductModal = ({ isOpen, onClose, categories, subCategories }) => {
                 value={formData.additionalInfo}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition resize-none bg-gray-50"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Additional Images (comma-separated URLs)
+              </label>
+              <textarea
+                name="additionalImages"
+                value={formData.additionalImages}
+                onChange={handleInputChange}
+                placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition resize-none bg-gray-50"
+              />
+            </div>
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Product Highlights (comma-separated)
+              </label>
+              <textarea
+                name="productHighlights"
+                value={formData.productHighlights}
+                onChange={handleInputChange}
+                placeholder="Long-lasting fragrance, Eco-friendly wax, Hand-poured"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition resize-none bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping Weight
+              </label>
+              <input
+                type="text"
+                name="shipping_weight"
+                value={formData.shipping_weight}
+                onChange={handleInputChange}
+                placeholder="e.g., 3 kg"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping Length
+              </label>
+              <input
+                type="text"
+                name="shipping_length"
+                value={formData.shipping_length}
+                onChange={handleInputChange}
+                placeholder="e.g., 20 cm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping Width
+              </label>
+              <input
+                type="text"
+                name="shipping_width"
+                value={formData.shipping_width}
+                onChange={handleInputChange}
+                placeholder="e.g., 15 cm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Shipping Height
+              </label>
+              <input
+                type="text"
+                name="shipping_height"
+                value={formData.shipping_height}
+                onChange={handleInputChange}
+                placeholder="e.g., 10 cm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition bg-gray-50"
               />
             </div>
             <div>

@@ -98,6 +98,12 @@ const SingleProduct = () => {
           <h1 className="text-4xl font-light text-gray-900">
             {slugProductData.name}
           </h1>
+          
+          {slugProductData.brand && (
+            <p className="text-lg text-gray-600">
+              Brand: <span className="font-medium">{slugProductData.brand}</span>
+            </p>
+          )}
 
           <div className="flex items-center space-x-2">
             <span className="text-3xl font-semibold text-gray-900">
@@ -112,6 +118,60 @@ const SingleProduct = () => {
               (Inclusive of all taxes)
             </span>
           </div>
+
+          {/* Product Highlights */}
+          {slugProductData.productHighlights && slugProductData.productHighlights.length > 0 && (
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h3 className="font-medium text-gray-900 mb-2">Product Highlights:</h3>
+              <ul className="list-disc list-inside space-y-1">
+                {slugProductData.productHighlights.map((highlight, index) => (
+                  <li key={index} className="text-gray-700 text-sm">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Product Properties */}
+          {(slugProductData.color || slugProductData.size || slugProductData.material) && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-4 border-t border-gray-200">
+              {slugProductData.color && (
+                <div>
+                  <span className="text-sm font-medium text-gray-500">Color:</span>
+                  <p className="text-gray-900">{slugProductData.color}</p>
+                </div>
+              )}
+              {slugProductData.size && (
+                <div>
+                  <span className="text-sm font-medium text-gray-500">Size:</span>
+                  <p className="text-gray-900">{slugProductData.size}</p>
+                </div>
+              )}
+              {slugProductData.material && (
+                <div>
+                  <span className="text-sm font-medium text-gray-500">Material:</span>
+                  <p className="text-gray-900">{slugProductData.material}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Availability Status */}
+          {slugProductData.availability && (
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium text-gray-500">Availability:</span>
+              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                slugProductData.availability === 'in_stock' 
+                  ? 'bg-green-100 text-green-800' 
+                  : slugProductData.availability === 'out_of_stock'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}>
+                {slugProductData.availability.replace('_', ' ').toUpperCase()}
+              </span>
+            </div>
+          )}
 
           {/* Quantity Selector */}
           <div>

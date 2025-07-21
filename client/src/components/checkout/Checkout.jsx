@@ -27,7 +27,7 @@ const Checkout = () => {
 
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("Profile"));
-//   console.log("User Profile: ", user);  
+  //   console.log("User Profile: ", user);
 
   //   useEffect(() => {
   //     // fetchCartItems();
@@ -53,9 +53,12 @@ const Checkout = () => {
   //   };
 
   const calculatePrices = () => {
-    const itemsPrice = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    const taxPrice = itemsPrice * 0.18; 
-    const shippingPrice = itemsPrice > 500 ? 0 : 50; 
+    const itemsPrice = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    const taxPrice = itemsPrice * 0.18;
+    const shippingPrice = itemsPrice > 500 ? 0 : 50;
     const totalPrice = itemsPrice + taxPrice + shippingPrice;
 
     return { itemsPrice, taxPrice, shippingPrice, totalPrice };
@@ -127,7 +130,6 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      // Load Razorpay script
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
         toast.error("Failed to load payment gateway");
@@ -135,7 +137,6 @@ const Checkout = () => {
         return;
       }
 
-      // Prepare order data
       const orderData = {
         orderItems: cartItems.map((item) => ({
           productId: item.product._id,
@@ -151,11 +152,11 @@ const Checkout = () => {
         totalPrice,
       };
 
+      console.log(orderData);
 
-    console.log(orderData);
-   
-    //   const token = localStorage.getItem("token");
-      const localStorageTempToken = user?.token || localStorage.getItem("Profile")?.token;
+      //   const token = localStorage.getItem("token");
+      const localStorageTempToken =
+        user?.token || localStorage.getItem("Profile")?.token;
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/payment/create-order`,
         {
@@ -174,7 +175,6 @@ const Checkout = () => {
         throw new Error(data.error || "Failed to create order");
       }
 
-      // Configure Razorpay options
       const options = {
         key: data.key,
         amount: data.amount,
@@ -202,6 +202,13 @@ const Checkout = () => {
             toast.info("Payment cancelled");
           },
         },
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true,
+          paylater: true,
+        },
       };
 
       const paymentObject = new window.Razorpay(options);
@@ -215,7 +222,8 @@ const Checkout = () => {
 
   const verifyPayment = async (paymentResponse, orderDbId) => {
     try {
-      const localStorageTempToken = user?.token || localStorage.getItem("Profile")?.token;
+      const localStorageTempToken =
+        user?.token || localStorage.getItem("Profile")?.token;
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/payment/verify-payment`,
         {
@@ -235,7 +243,7 @@ const Checkout = () => {
 
       const data = await response.json();
       console.log("Payment verification response:", data);
-      
+
       if (data.success) {
         toast.success("Payment successful! Order placed.");
         navigate(`/account/${user._id}?tab=orders`);
@@ -378,11 +386,16 @@ const Checkout = () => {
           {/* Cart Items */}
           <div className="space-y-4 mb-6">
             {cartItems.map((item) => (
-              <div key={item.product._id} className="flex items-center space-x-4">
+              <div
+                key={item.product._id}
+                className="flex items-center space-x-4"
+              >
                 <img
                   src={
                     item.product.images?.[0]
-                      ? `${import.meta.env.VITE_API_URL}/uploads/${item.product.images[0]}`
+                      ? `${import.meta.env.VITE_API_URL}/uploads/${
+                          item.product.images[0]
+                        }`
                       : "https://placehold.co/64X64?text=No+Image"
                   }
                   alt={item.product.name}
@@ -390,9 +403,7 @@ const Checkout = () => {
                 />
                 <div className="flex-1">
                   <h3 className="font-medium">{item.product.name}</h3>
-                  <p className="text-gray-600">
-                    Qty: {item.quantity}
-                  </p>
+                  <p className="text-gray-600">Qty: {item.quantity}</p>
                 </div>
                 <p className="font-medium">
                   ₹{(item.price * item.quantity).toFixed(2)}

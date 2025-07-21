@@ -40,14 +40,14 @@ import CommonCategoryPage from "./components/commonCategory/index";
 import Layout from "./components/layout";
 
 const AllRoutes = () => { 
-  const UserRole = useSelector((state) => state.auth?.data?.role) || 'user' ;
-  const UserAuthData = useSelector((state) => state.auth);  
+  const UserRole = useSelector((state) => state.auth?.user?.role) ;
+  // const UserAuthData = useSelector((state) => state.auth);  
 
   // const allStates = useSelector((state) => state);
   // console.log(allStates);
-
-  console.log('User Auth Data:', UserAuthData);
-  console.log('User Role:', UserRole);
+  // console.log('User auth:', useSelector((state) => state.auth));
+  // console.log('User Auth Data:', UserAuthData);
+  // console.log('User Role:', UserRole);
   // const [UserRole, setUserRole] = useState('user');
   // const userProfile = JSON.parse(localStorage.getItem("Profile"));
   // const UserProfile = JSON.parse(localStorage.getItem("Profile"));
